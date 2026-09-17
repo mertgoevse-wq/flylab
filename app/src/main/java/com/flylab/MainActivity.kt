@@ -3,12 +3,23 @@ package com.flylab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.flylab.ui.theme.FlyLabTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +27,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FlyLabTheme {
-                FlyLabApp()
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    FlyLabApp()
+                }
             }
         }
     }
@@ -32,19 +48,19 @@ fun FlyLabApp() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "FlyLab Android Shell\n\nReady to build 3D brain viewer...",
+            text = "FlyLab\nDrosophila melanogaster Simulation",
             color = MaterialTheme.colorScheme.onBackground,
-            fontSize = 24.sp,
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            fontSize = 22.sp,
+            textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { /* TODO: Start 3D brain viewer */ },
-            modifier = Modifier.width(200.dp)
+            onClick = { /* TODO: Launch simulation slice */ },
+            modifier = Modifier.width(240.dp)
         ) {
-            Text("Launch 3D Brain Viewer")
+            Text("Launch FlyLab Simulator")
         }
     }
 }
