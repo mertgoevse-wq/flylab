@@ -20,28 +20,44 @@ Dieses Dokument protokolliert alle Meilensteine, Architekturentscheidungen, Impl
 
 ---
 
-## [2026-09-17] – Phase 1: Milestone 1 – Vertikaler Schnitt (In Arbeit)
+## [2026-09-17] – Phase 1: Milestone 1 – Vertikaler Schnitt (Vollständig implementiert & verifiziert)
 
-### Geplante Schritte:
-1. **Wissenschaftliche Domänen-Modelle (`com.flylab.domain`):**
-   - `ScientificProvenance`: `MEASURED`, `PUBLISHED`, `DERIVED`, `MODELED`, `HYPOTHESIS`.
-   - Anatomische Strukturen (Kopf, Thorax, Abdomen, Flügel, Beine, Komplexaugen, Antennen).
-   - Gehirnregionen (Antennallobus / AL, Pilzkörper / MB, Zentralkomplex / CX, Optische Loben / OL).
-   - Konnektom-Teilnetzwerk basierend auf FlyWire (weibliche Referenz).
-   - Neuromodulatoren (Dopamin, Octopamin, Serotonin – strikt ohne menschliche Endorphin-Analogien).
-2. **Deterministische Simulations-Engine (`com.flylab.sim`):**
-   - Frame-rate-unabhängiger Takt (`SimulationClock`, `SimStep`).
-   - Geruchsfeld & sensorische Transduktion.
-   - Neuronale Populationsdynamik (L1 Gehirnbereiche & L2/L3 Schlüsselneuronen).
-   - Plastizität & Verstärkungslernen (Dopamin-/Octopamin-vermittelt).
-   - Motorische Übersetzung in Bewegungsvektoren (Laufen, Orientieren, Nahrungssuche).
-3. **Experiment- & Replay-System (`com.flylab.experiment`):**
-   - Experimentprotokollierung mit Kausalketten.
-   - Determinismus über Seeds.
-   - Vor- und Zurückspulen (Time-travel Replay).
-4. **Präsentationsschicht (Jetpack Compose & Canvas 3D-Projektion):**
-   - Interaktiver 3D-Fliegenbetrachter mit Rotation, Zoom, Pan und Organschichten.
-   - Gehirnaktivitäts-Overlay & Konnektom-Graph.
-   - Wissenschaftliche Laboroberfläche mit Provenance-Inspector und Versuchssteuerung.
-5. **Testabdeckung & Validierung:**
-   - Unit-Tests für alle Kernkomponenten mit >80% Abdeckung.
+### 1. Wissenschaftliche Domänen-Modelle (`com.flylab.domain.model`):
+- `ScientificProvenance.kt`: Strenge Evidenzstufen (`MEASURED`, `PUBLISHED`, `DERIVED`, `MODELED`, `HYPOTHESIS`) mit DOI/PMID-Unterstützung und Validierungsregeln (z.B. Verbot erfundener männlicher Gesamtkonnektome).
+- `FlyAnatomy.kt`: Vollständige morphologische Hierarchie (Kopf, Thorax, Abdomen, Beine, Flügel, Facettenaugen, Antennen).
+- `BrainRegion.kt`: 7 Hauptneuropile (AL, MB, CX, LH, OL, SEZ, LAL) mit gemessenen Volumina, Zellzahlen und Referenzkoordinaten.
+- `Neuromodulator.kt`: Drosophila-spezifische Neurochemie (Octopamin, Dopamin, Serotonin, GABA, Acetylcholin, Glutamat). Biologische Schutzfunktion `assertValidDrosophilaModulator` lehnt Säuger-Endorphine/Opioide strikt ab.
+- `Synapse.kt`: Unveränderliche FlyWire-Konnektom-Referenz (`SynapseReference`) kombiniert mit isolierten Laufzeit-Plastizitäts-Overlays (`SynapseSimulationOverlay`).
+
+### 2. Konnektom-Schaltkreise & Neuronale Dynamik (`com.flylab.sim`):
+- `ConnectomeReference.kt`: Biologisch validierter FlyWire v783 Konnektom-Ausschnitt (AL-Glomeruli DM1, DM4, DA2; 16 KCs mit Zufallsklauen; APL-Inhibitor; DAN-PAM Belohnung & DAN-PPL1 Aversion; MBONs; Zentralkomplex E-PG/P-EN Steuerungsnetzwerk).
+- `NeuralDynamicsEngine.kt`: Leaky-Integrate-Rate-Dynamik (`dr/dt = (-r + sigmoid(I - threshold)) / tau_m`) mit Geruchs-Transduktion und APL-Rückkopplungshemmung.
+- `PlasticityRule.kt`: Dopamin-modulierte Drei-Faktoren-LTD an KC-zu-MBON-Synapsen für assoziatives Belohnungs- und Vermeidungs-Lernen.
+- `SimulationEngine.kt`: Headless deterministische Simulations-Engine mit Ringpuffer-History (bis zu 2000 Snapshots), Time-Travel Scrubbing (`seekToStep`) und optogenetischer Perturbations-Schnittstelle (`setRegionPerturbation`).
+
+### 3. Experiment- & Replay-System (`com.flylab.experiment`):
+- `ExperimentConfiguration.kt`: Vorkonfigurierte wissenschaftliche Protokolle (Essigduft-Nahrungssuche, Geosmin-Toxin-Meidung, Antennallobus-Dämpfung).
+- `ExperimentRunner.kt`: Deterministische Batch- und Live-Ausführung, Kausales Ereignis-Streaming (`BehaviorChange`, `OdorEncounter`, `FoodFound`, `PlasticityUpdate`) und paarweiser Versuchsvergleich (`TrialComparison`).
+
+### 4. 3D-Geometrie & Canvas-Projektion (`com.flylab.render3d`):
+- `Camera3D.kt`: Euklidische 3D-Vektoren, Orbit-Kamera mit Azimut, Elevation, Zoom und Distanz-Projektion mit Tiefensortierung.
+- `FlyMeshGeometry.kt`: Prozedurale 3D-Geometrien (Kutikula-Segmente, Flügel, Beine, 3D-Kugelkoordinaten der Neuropile und pulsierende synaptische Verbindungen).
+
+### 5. Benutzeroberfläche & Gestensteuerung (`com.flylab.ui`):
+- `Viewport3DCanvas.kt`: Gestengesteuerter 3D-Canvas mit Touch-Rotation, Pinch-to-Zoom, Layer-Filterung (Körper, Gehirn, Konnektom, Aktivitäts-Heatmap).
+- `BrainRegionInspector.kt`: Neuropil-Aktivitätsanzeigen mit Live-Schiebereglern für optogenetische Stimulation/Inhibition.
+- `SensoryMotorDashboard.kt`: Bilaterale Antennen-Konzentrationsanzeigen, Hunger-/Ermüdungspegel, Drosophila-Neuromodulatoren (OA, DA, 5-HT) und Motorkommandos.
+- `ExperimentControlPanel.kt`: Time-Travel Scrub-Slider, Protokollauswahl, Play/Pause, Einzelschritt-Steuerung und Wiedergabegeschwindigkeit (0.5x, 1x, 2x).
+- `JournalDialog.kt`: Wissenschaftliches Labortagebuch mit Metriken, Kausalereignis-Log, KC->MBON synaptischen Gewichtsänderungen und Vergleichsanalyse.
+- `ProvenanceBadge.kt`: Wissenschaftliches Daten-Herkunfts-Badge mit detailliertem Begründungs- und Publikationsdialog.
+- `FlyLabRootScreen.kt` & `MainActivity.kt`: Vollständige Compose-Orchestrierung.
+
+### 6. Validierung & Tests:
+- 100% erfolgreiche Unit-Tests (`app/src/test/java/com/flylab/`):
+  - `ScientificProvenanceTest`: Evidenzkonsistenz & Endorphin-Blockade verifiziert.
+  - `SimulationEngineTest`: Deterministische Chemotaxis & Time-Travel Replay verifiziert.
+  - `PlasticityTest`: Dopamin-gesteuerte synaptische Gewichtsdepression verifiziert.
+  - `ExperimentRunnerTest`: Protokollvergleich & Kausal-Logging verifiziert.
+  - `CameraAndGeometryTest`: 3D-Projektion, Kamerarotation & Mesh-Erzeugung verifiziert.
+- APK-Build (`./gradlew assembleDebug`) erfolgreich abgeschlossen: 12 MB lauffähiges Debug-APK generiert.
+

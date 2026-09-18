@@ -39,6 +39,13 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion '1.5.8'
     }
+    testOptions {
+        unitTests.all {
+            forkEvery = 0
+            maxParallelForks = 1
+            jvmArgs '-Xmx768m', '-Djava.net.preferIPv4Stack=true', '-XX:+TieredCompilation', '-XX:TieredStopAtLevel=1'
+        }
+    }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
