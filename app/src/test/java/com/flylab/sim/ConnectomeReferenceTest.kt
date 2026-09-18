@@ -63,4 +63,46 @@ class ConnectomeReferenceTest {
         assertNotNull(ConnectomeReference.EVIDENCE.citation)
         assertNotNull(ConnectomeReference.EVIDENCE.doi)
     }
+
+    @Test
+    fun `kenyon cell projections and neurons are explicitly classified as MODELED`() {
+        val kcNeurons = ConnectomeReference.NEURONS.filter { it.id.startsWith("KC_") }
+        assertEquals(16, kcNeurons.size)
+
+        for (kc in kcNeurons) {
+            assertTrue("Kenyon cell #$kc must be marked as representative model", kc.isRepresentativeModel)
+            assertEquals("Kenyon cell #$kc evidence must be MODELED", ProvenanceLevel.MODELED, kc.provenanceLevel)
+            assertFalse("Modeled KCs must not claim empirical verification", kc.evidence.level.isEmpiricallyVerified)
+        }
+
+        // Check PN -> KC synapses
+        val pnKcSynapses = ConnectomeReference.SYNAPSES.filter { it.preNeuronId.startsWith("PN_") && it.postNeuronId.startsWith("KC_") }
+        assertTrue(pnKcSynapses.isNotEmpty())
+        for (syn in pnKcSynapses) {
+            assertEquals("PN->KC claw synapse must be classified as MODELED", ProvenanceLevel.MODELED, syn.provenanceLevel)
+            assertFalse(syn.evidence.level.isEmpiricallyVerified)
+        }
+    }
+
+    @Test
+    fun `no modeled synapse or circuit is presented as MEASURED FlyWire anatomy`() {
+        for (syn in ConnectomeReference.SYNAPSES) {
+            // A synapse can only be DERIVED, PUBLISHED or MODELED in this vertical slice model
+            assertFalse(
+                "Synapse ${syn.synapseId} (${syn.preNeuronId} -> ${syn.postNeuronId}) is simplified/modeled and cannot be marked MEASURED",
+                syn.provenanceLevel == ProvenanceLevel.MEASURED
+            )
+        }
+    }
+
+    @Test
+    fun `plastic KC to MBON synapses are explicitly MODELED and immutable in reference data`() {
+        val plasticSynapses = ConnectomeReference.SYNAPSES.filter { it.isPlastic }
+        assertEquals(32, plasticSynapses.size) // 16 KCs * 2 MBONs
+
+        for (syn in plasticSynapses) {
+            assertEquals(ProvenanceLevel.MODELED, syn.provenanceLevel)
+            assertEquals(1.0f, syn.baselineWeight, 0.001f)
+        }
+    }
 }

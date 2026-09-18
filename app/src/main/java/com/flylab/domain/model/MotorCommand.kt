@@ -8,11 +8,7 @@ data class MotorCommand(
     val angularVelocityRadS: Float = 0.0f,    // Turning rate in radians/s [-10.0 .. +10.0]
     val proboscisExtension: Float = 0.0f,     // Proboscis extension response (PER) [0.0 .. 1.0]
     val wingBeatFrequencyHz: Float = 0.0f,    // 0.0 if grounded, ~200 Hz if in flight
-    override val evidence: ScientificEvidence = ScientificEvidence(
-        level = ProvenanceLevel.PUBLISHED,
-        citation = "Bidaye et al. (2014) Science 344:97-101; Mendes et al. (2013) eLife.",
-        notes = "Drosophila walking kinematics and steering angle velocity ranges."
-    )
+    override val evidence: ScientificEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY
 ) : ProvenanceTagged {
     init {
         require(forwardVelocityMmS >= -5.0f && forwardVelocityMmS <= 45.0f) {
@@ -24,6 +20,12 @@ data class MotorCommand(
     }
 
     companion object {
+        val PHYSIOLOGICAL_BOUNDS_EVIDENCE = ScientificEvidence(
+            level = ProvenanceLevel.PUBLISHED,
+            citation = "Bidaye et al. (2014) Science 344:97-101; Mendes et al. (2013) eLife.",
+            notes = "Drosophila walking kinematics and steering angle velocity ranges."
+        )
+
         val IDLE = MotorCommand()
         val WALK_FORWARD = MotorCommand(forwardVelocityMmS = 18.0f)
         val TURN_RIGHT = MotorCommand(forwardVelocityMmS = 5.0f, angularVelocityRadS = 2.5f)

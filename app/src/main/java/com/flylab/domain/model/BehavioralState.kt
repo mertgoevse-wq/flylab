@@ -123,11 +123,7 @@ data class BehavioralState(
     val headingRadians: Float = 0.0f, // Angle in radians (0 = pointing +X)
     val distanceTraveledMm: Float = 0.0f,
     val foodConsumedUnits: Float = 0.0f,
-    override val evidence: ScientificEvidence = ScientificEvidence(
-        level = ProvenanceLevel.MODELED,
-        citation = "FlyLab Kinematics & Behavior Subsystem",
-        notes = "Integrates 2D planar arena coordinates and current discrete behavioral action."
-    )
+    override val evidence: ScientificEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY
 ) : ProvenanceTagged {
     fun updateSpatial(command: MotorCommand, dtSeconds: Float, arenaRadiusMm: Float): BehavioralState {
         var newHeading = (headingRadians + command.angularVelocityRadS * dtSeconds) % (2.0f * Math.PI.toFloat())

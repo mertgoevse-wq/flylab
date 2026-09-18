@@ -109,7 +109,7 @@ fun SensoryMotorDashboard(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text("L: ", fontSize = 10.sp, fontFamily = FontFamily.Monospace)
                         LinearProgressIndicator(
-                            progress = sensory.odorLeftAntenna,
+                            progress = { sensory.odorLeftAntenna },
                             modifier = Modifier.weight(1f).height(4.dp),
                             color = Color(0xFF059669)
                         )
@@ -118,7 +118,7 @@ fun SensoryMotorDashboard(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text("R: ", fontSize = 10.sp, fontFamily = FontFamily.Monospace)
                         LinearProgressIndicator(
-                            progress = sensory.odorRightAntenna,
+                            progress = { sensory.odorRightAntenna },
                             modifier = Modifier.weight(1f).height(4.dp),
                             color = Color(0xFF059669)
                         )
@@ -147,7 +147,7 @@ fun SensoryMotorDashboard(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text("Hunger: ", fontSize = 10.sp, modifier = Modifier.width(42.dp))
                         LinearProgressIndicator(
-                            progress = needs.hunger,
+                            progress = { needs.hunger },
                             modifier = Modifier.weight(1f).height(4.dp),
                             color = Color(0xFFD97706)
                         )
@@ -156,7 +156,7 @@ fun SensoryMotorDashboard(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text("Ermüdung:", fontSize = 10.sp, modifier = Modifier.width(42.dp))
                         LinearProgressIndicator(
-                            progress = needs.fatigue,
+                            progress = { needs.fatigue },
                             modifier = Modifier.weight(1f).height(4.dp),
                             color = Color(0xFF64748B)
                         )

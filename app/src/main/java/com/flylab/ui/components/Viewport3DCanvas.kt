@@ -59,6 +59,7 @@ fun Viewport3DCanvas(
 
     val (anatomyPolygons, anatomyLines) = remember { FlyMeshGeometry.buildAnatomyGeometry() }
     val brainNeuropils = remember { FlyMeshGeometry.buildBrainNeuropils() }
+    val reusablePath = remember { Path() }
 
     Box(
         modifier = modifier
@@ -96,15 +97,15 @@ fun Viewport3DCanvas(
                 }.sortedByDescending { it.third }
 
                 for ((poly, verts, _) in sortedPolys) {
-                    val path = Path().apply {
-                        moveTo(verts[0].screenX, verts[0].screenY)
-                        for (i in 1 until verts.size) {
-                            lineTo(verts[i].screenX, verts[i].screenY)
-                        }
-                        close()
+                    reusablePath.reset()
+                    reusablePath.moveTo(verts[0].screenX, verts[0].screenY)
+                    for (i in 1 until verts.size) {
+                        reusablePath.lineTo(verts[i].screenX, verts[i].screenY)
                     }
+                    reusablePath.close()
+
                     drawPath(
-                        path = path,
+                        path = reusablePath,
                         color = Color(poly.baseColorHex).copy(alpha = poly.alpha)
                     )
                 }
@@ -208,7 +209,7 @@ fun Viewport3DCanvas(
             }
 
             // 4. Orientation HUD Indicator
-            drawOrientationCompass(camera, width, height)
+            drawOrientationCompass(camera, height)
         }
 
         // Layer Filter Chips at Top Right
@@ -238,7 +239,7 @@ fun Viewport3DCanvas(
     }
 }
 
-private fun DrawScope.drawOrientationCompass(camera: Camera3D, width: Float, height: Float) {
+private fun DrawScope.drawOrientationCompass(camera: Camera3D, height: Float) {
     val compassCenter = Offset(45.dp.toPx(), height - 45.dp.toPx())
     val compassRadius = 25.dp.toPx()
 

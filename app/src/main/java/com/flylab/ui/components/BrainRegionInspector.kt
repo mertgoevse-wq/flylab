@@ -206,7 +206,7 @@ private fun NeuropilCard(
 
             // Activation level bar
             LinearProgressIndicator(
-                progress = state.meanActivation,
+                progress = { state.meanActivation },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(5.dp),

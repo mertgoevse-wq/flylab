@@ -89,11 +89,7 @@ data class SensoryInput(
     val windVelocityMmS: Float = 0.0f,     // Mechanosensory airflow velocity
     val temperatureCelsius: Float = 24.0f, // Ambient temperature (24°C is physiological optimum)
     val sucroseContact: Float = 0.0f,      // Proboscis/tarsal gustatory sugar concentration [0.0 .. 1.0]
-    override val evidence: ScientificEvidence = ScientificEvidence(
-        level = ProvenanceLevel.DERIVED,
-        citation = "FlyLab Sensory Transduction Pipeline",
-        notes = "Continuous bilateral sensory gradients computed from simulated 2D/3D arena positions."
-    )
+    override val evidence: ScientificEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY
 ) : ProvenanceTagged {
     init {
         require(odorLeftAntenna in 0.0f..1.0f) { "Left odor concentration must be in [0, 1]" }

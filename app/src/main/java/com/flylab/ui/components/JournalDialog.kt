@@ -17,7 +17,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -152,7 +152,7 @@ fun JournalDialog(
                                             color = MaterialTheme.colorScheme.onSurface
                                         )
                                     }
-                                    Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
+                                    HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
                                 }
                             }
                         }
@@ -206,7 +206,7 @@ fun JournalDialog(
                                             color = deltaColor
                                         )
                                     }
-                                    Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
+                                    HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
                                 }
                             }
                         }

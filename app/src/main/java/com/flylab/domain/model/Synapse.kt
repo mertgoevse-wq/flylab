@@ -15,7 +15,7 @@ data class SynapseReference(
     val baselineWeight: Float, // Empirical synaptic count or normalized baseline weight
     val isExcitatory: Boolean = neurotransmitter != NeuromodulatorType.GABA,
     val isPlastic: Boolean = false, // True for KC -> MBON synapses
-    override val evidence: ScientificEvidence = ScientificEvidence.FLYWIRE_FEMALE_CONNECTOME_V783
+    override val evidence: ScientificEvidence
 ) : ProvenanceTagged {
     init {
         require(baselineWeight >= 0f) { "Baseline weight must be non-negative" }
@@ -33,11 +33,7 @@ data class SynapseSimulationOverlay(
     val lastUpdateStep: Long = 0L,
     val lastUpdateTimestampMs: Long = 0L,
     val lastPlasticityCause: String = "INITIAL_STATE",
-    override val evidence: ScientificEvidence = ScientificEvidence(
-        level = ProvenanceLevel.MODELED,
-        citation = "FlyLab Plasticity Engine",
-        notes = "Synaptic weight change calculated through dopamine/octopamine gated plasticity rule."
-    )
+    override val evidence: ScientificEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY
 ) : ProvenanceTagged {
     init {
         require(currentWeight >= 0f) { "Synaptic weight cannot be negative" }

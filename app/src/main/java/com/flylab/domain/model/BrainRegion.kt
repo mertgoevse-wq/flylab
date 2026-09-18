@@ -160,8 +160,9 @@ data class BrainRegionState(
     val meanActivation: Float = 0.0f, // [0.0 (silent) .. 1.0 (maximal burst)]
     val activeNeuronFraction: Float = 0.0f,
     val isPerturbed: Boolean = false, // True if user or experiment optogenetically silenced/stimulated
-    val perturbationFactor: Float = 1.0f // 0.0 = completely silenced, >1.0 = stimulated
-) {
+    val perturbationFactor: Float = 1.0f, // 0.0 = completely silenced, >1.0 = stimulated
+    override val evidence: ScientificEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY
+) : ProvenanceTagged {
     init {
         require(meanActivation in 0.0f..1.0f) { "Mean activation must be in [0, 1], was $meanActivation" }
         require(activeNeuronFraction in 0.0f..1.0f) { "Active fraction must be in [0, 1], was $activeNeuronFraction" }

@@ -26,7 +26,7 @@ enum class NeuronType(
  */
 data class Neuron(
     val id: String,
-    val flyWireRootId: Long? = null, // e.g. 720575940621000000L from FlyWire v783
+    val flyWireRootId: Long? = null, // Measured 64-bit root ID from FlyWire v783 (null if representative model)
     val name: String,
     val type: NeuronType,
     val neuropil: NeuropilId,
@@ -34,7 +34,8 @@ data class Neuron(
     val posX: Float = 0.0f,
     val posY: Float = 0.0f,
     val posZ: Float = 0.0f,
-    override val evidence: ScientificEvidence = ScientificEvidence.FLYWIRE_FEMALE_CONNECTOME_V783
+    val isRepresentativeModel: Boolean = false, // True if simplified/representative rather than full individual reconstruction
+    override val evidence: ScientificEvidence
 ) : ProvenanceTagged
 
 enum class Hemisphere {
@@ -51,8 +52,9 @@ data class NeuronDynamicState(
     val membranePotential: Float = -65.0f, // Resting potential mV (MODELED)
     val firingRate: Float = 0.0f,          // Normalized rate [0.0 .. 1.0]
     val lastSpikeTimeMs: Long = -1L,
-    val adaptationCurrent: Float = 0.0f
-) {
+    val adaptationCurrent: Float = 0.0f,
+    override val evidence: ScientificEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY
+) : ProvenanceTagged {
     init {
         require(firingRate in 0.0f..1.0f) { "Firing rate must be in [0, 1], was $firingRate" }
     }

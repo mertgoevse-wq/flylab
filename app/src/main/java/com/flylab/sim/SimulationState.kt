@@ -8,6 +8,8 @@ import com.flylab.domain.model.Fly
 import com.flylab.domain.model.MotorCommand
 import com.flylab.domain.model.NeuromodulatorType
 import com.flylab.domain.model.NeuropilId
+import com.flylab.domain.model.ProvenanceTagged
+import com.flylab.domain.model.ScientificEvidence
 import com.flylab.domain.model.SensoryInput
 import com.flylab.domain.model.SynapseSimulationOverlay
 
@@ -25,5 +27,6 @@ data class SimulationSnapshot(
     val regionStates: Map<NeuropilId, BrainRegionState>,
     val synapticOverlays: Map<String, SynapseSimulationOverlay>,
     val activeBehavior: BehaviorType,
-    val seed: Long
-)
+    val seed: Long,
+    override val evidence: ScientificEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY
+) : ProvenanceTagged

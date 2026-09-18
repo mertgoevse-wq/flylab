@@ -24,6 +24,7 @@ class ScientificProvenanceTest {
         assertTrue(canonicalNames.contains("PUBLISHED"))
         assertTrue(canonicalNames.contains("DERIVED"))
         assertTrue(canonicalNames.contains("MODELED"))
+        assertTrue(canonicalNames.contains("SIMULATED"))
         assertTrue(canonicalNames.contains("HYPOTHESIS"))
     }
 
@@ -34,6 +35,24 @@ class ScientificProvenanceTest {
         assertTrue(evidence.isEmpiricallyVerified())
         assertNotNull(evidence.doi)
         assertEquals("v783", evidence.datasetVersion)
+    }
+
+    @Test
+    fun `no simplified or modeled connection is classified as MEASURED`() {
+        val kcClawEvidence = ScientificEvidence.KENYON_CELL_SPARSE_MODEL
+        assertEquals(ProvenanceLevel.MODELED, kcClawEvidence.level)
+        assertFalse("Modeled KC claw connections cannot claim to be empirically measured", kcClawEvidence.isEmpiricallyVerified())
+
+        val premotorEvidence = ScientificEvidence.PREMOTOR_STEERING_MODEL
+        assertEquals(ProvenanceLevel.MODELED, premotorEvidence.level)
+        assertFalse(premotorEvidence.isEmpiricallyVerified())
+    }
+
+    @Test
+    fun `simulation dynamic overlays carry SIMULATED provenance`() {
+        val overlayEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY
+        assertEquals(ProvenanceLevel.SIMULATED, overlayEvidence.level)
+        assertFalse(overlayEvidence.isEmpiricallyVerified())
     }
 
     @Test

@@ -46,12 +46,13 @@ fun ProvenanceBadge(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val (bgColor, textColor) = when (evidence.level) {
-        ProvenanceLevel.MEASURED -> Color(0xFF059669) to Color.White   // Emerald
-        ProvenanceLevel.PUBLISHED -> Color(0xFF0284C7) to Color.White  // Sky Blue
-        ProvenanceLevel.DERIVED -> Color(0xFF6366F1) to Color.White    // Indigo
-        ProvenanceLevel.MODELED -> Color(0xFFD97706) to Color.White    // Amber
-        ProvenanceLevel.HYPOTHESIS -> Color(0xFFDC2626) to Color.White // Red
+    val bgColor = when (evidence.level) {
+        ProvenanceLevel.MEASURED -> Color(0xFF059669)   // Emerald
+        ProvenanceLevel.PUBLISHED -> Color(0xFF0284C7)  // Sky Blue
+        ProvenanceLevel.DERIVED -> Color(0xFF6366F1)    // Indigo
+        ProvenanceLevel.MODELED -> Color(0xFFD97706)    // Amber
+        ProvenanceLevel.SIMULATED -> Color(0xFF0D9488)  // Teal
+        ProvenanceLevel.HYPOTHESIS -> Color(0xFFDC2626) // Red
     }
 
     Box(
@@ -144,6 +145,7 @@ fun ProvenanceDetailDialog(
                                 ProvenanceLevel.PUBLISHED -> "Dieser Mechanismus wurde von Wissenschaftlern in Fachartikeln untersucht und genau beschrieben."
                                 ProvenanceLevel.DERIVED -> "Dieser Wert wurde mathematisch aus echten Messungen des Fliegengehirns ausgerechnet."
                                 ProvenanceLevel.MODELED -> "Das ist ein vereinfachtes Computermodell, das sich an echten biologischen Prinzipien orientiert."
+                                ProvenanceLevel.SIMULATED -> "Dieser Wert wird dynamisch während des laufenden Simulationsflugs in Echtzeit berechnet."
                                 ProvenanceLevel.HYPOTHESIS -> "Das ist eine Annahme oder Vermutung, für die es noch keine sicheren Messdaten gibt."
                             },
                             style = MaterialTheme.typography.bodyMedium
@@ -207,7 +209,7 @@ fun ProvenanceDetailDialog(
                                 fontWeight = FontWeight.SemiBold
                             )
                             LinearProgressIndicator(
-                                progress = evidence.confidence,
+                                progress = { evidence.confidence },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(4.dp)
