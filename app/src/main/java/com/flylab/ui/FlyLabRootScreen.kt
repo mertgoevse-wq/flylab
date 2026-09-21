@@ -160,6 +160,12 @@ fun FlyLabRootScreen() {
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                 )
 
+                // 3.6 Plasticity UI
+                com.flylab.ui.components.PlasticityDashboard(
+                    snapshot = currentSnapshot,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                )
+
                 // 4. Experiment Playback & Scrub Controls
                 ExperimentControlPanel(
                     isPlaying = isPlaying,

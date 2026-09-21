@@ -3,6 +3,8 @@ package com.flylab.domain.simulation
 import com.flylab.domain.brain.Brain
 import com.flylab.domain.connectome.Connectome
 import com.flylab.domain.memory.MemorySystem
+import com.flylab.domain.model.Environment
+import com.flylab.domain.model.Fly
 import com.flylab.domain.neural.NeuralActivity
 import com.flylab.domain.timeline.Timeline
 
@@ -13,6 +15,8 @@ import com.flylab.domain.timeline.Timeline
 data class SimulationState(
     val simulationId: String,
     val timestamp: Long,
+    val fly: Fly,
+    val environment: Environment,
     val brain: Brain,
     val connectome: Connectome,
     val neuralActivity: NeuralActivity?,

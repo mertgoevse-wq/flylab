@@ -48,8 +48,8 @@ DOMAIN: Simulation
 DESCRIPTION: Basic odor/temp fields, 4 senses implementation, needs (hunger/exhaustion) leading to basic behaviors.
 DEPENDENCIES: M1-001
 RELEVANT SKILLS: autoresearch, claude-security, optimize
-IMPLEMENTATION STATUS: Pending
-TEST STATUS: Pending
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
 
 ## M3 - VISIBLE CAUSALITY
 TASK-ID: M3-001
@@ -64,19 +64,24 @@ TEST STATUS: Complete
 TASK-ID: M4-001
 DOMAIN: Simulation & Visualization
 DESCRIPTION: Implement learning indicators (reward, connection changes before/after) linked to plasticity engine.
-DEPENDENCIES: M3-001
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
 
 ## M5 - EXPERIMENT WORKFLOW
 TASK-ID: M5-001
 DOMAIN: Core App
 DESCRIPTION: Full experiment engine UI (play, pause, rewind, time-travel, deterministic save/load).
 DEPENDENCIES: M4-001
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
 
 ## M6 - BRAIN REGIONS
 TASK-ID: M6-001
 DOMAIN: 3D Visualization / UI
 DESCRIPTION: 50+ brain regions rendered with activity layers, tap-to-inspect, heating/performance warnings.
 DEPENDENCIES: M2-001 (can run parallel to M4/M5)
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
 
 ## M7 - P1 VERTICAL SLICE COMPLETION
 TASK-ID: M7-001
