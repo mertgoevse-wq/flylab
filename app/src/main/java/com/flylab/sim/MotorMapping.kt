@@ -59,7 +59,8 @@ object MotorMapping {
         val netAttraction = (mbonApp - mbonAvo) + (lhonAtt - lhonAvo)
 
         // Bilateral steering: turn towards the side with higher sensory/motor drive
-        val steerBalance = (motorR - motorL) + (sensoryInput.odorGradientBilateral * 1.5f) + randomNoise
+        val opticAvoidance = (sensoryInput.opticFlowLeft - sensoryInput.opticFlowRight) * 5.0f
+        val steerBalance = (motorR - motorL) + (sensoryInput.odorGradientBilateral * 1.5f) - opticAvoidance + randomNoise
         val angularVel = (steerBalance * MAX_TURN_RATE_RAD_S).coerceIn(-MAX_TURN_RATE_RAD_S, MAX_TURN_RATE_RAD_S)
 
         val speedFactor = if (netAttraction > 0.1f) {
@@ -74,6 +75,7 @@ object MotorMapping {
 
         val behavior = when {
             netAttraction < -0.2f -> BehaviorType.AVOIDING
+            Math.abs(opticAvoidance) > 1.0f -> BehaviorType.AVOIDING
             netAttraction > 0.2f && sensoryInput.meanOdorConcentration > 0.05f -> BehaviorType.APPROACHING
             Math.abs(angularVel) > 2.0f -> BehaviorType.ORIENTING
             forwardVel > 2.0f -> BehaviorType.EXPLORING

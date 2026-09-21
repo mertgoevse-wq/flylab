@@ -119,3 +119,19 @@ DESCRIPTION: Upgrade the fly from a visualization into an inspectable simulated 
 DEPENDENCIES: M9-001
 IMPLEMENTATION STATUS: Complete
 TEST STATUS: Complete
+
+## M11 - ADVANCED 3D FLY
+TASK-ID: M11-001
+DOMAIN: 3D Visualization
+DESCRIPTION: Enhance the 3D representation via dynamic shaders, detailed procedural modeling, or explicit models. Add lighting to the synthetic organs.
+DEPENDENCIES: M10-001
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
+
+## M12 - VISION / VISUAL PERCEPTION
+TASK-ID: M12-001
+DOMAIN: Simulation & UI
+DESCRIPTION: World -> Eyes -> Visual sensor model. View linked to what the fly receives.
+DEPENDENCIES: M11-001
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete

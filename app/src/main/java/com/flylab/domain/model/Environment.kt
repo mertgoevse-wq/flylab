@@ -24,6 +24,14 @@ data class OdorSource(
     }
 }
 
+data class VisualObject(
+    val id: String,
+    val posXmm: Float,
+    val posYmm: Float,
+    val radiusMm: Float,
+    val luminance: Float // 0.0 (black/dark) to 1.0 (bright)
+)
+
 /**
  * Experimental environment / arena settings.
  */
@@ -42,10 +50,19 @@ data class Environment(
             sucroseConcentration = 0.8f
         )
     ),
+    val visualObjects: List<VisualObject> = listOf(
+        VisualObject(
+            id = "black_stripe",
+            posXmm = 0.0f,
+            posYmm = 40.0f,
+            radiusMm = 5.0f,
+            luminance = 0.0f
+        )
+    ),
     override val evidence: ScientificEvidence = ScientificEvidence(
         level = ProvenanceLevel.PUBLISHED,
         citation = "Simon & Dickinson (2010) J Exp Biol; Steck et al. (2012) eLife.",
-        notes = "Standard circular behavioral arena with continuous chemical plume gradient."
+        notes = "Standard circular behavioral arena with continuous chemical plume gradient and visual landmarks."
     )
 ) : ProvenanceTagged {
     fun sampleOdorAt(x: Float, y: Float, odorType: OdorType): Float {

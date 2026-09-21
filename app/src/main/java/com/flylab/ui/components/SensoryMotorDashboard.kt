@@ -134,6 +134,25 @@ fun SensoryMotorDashboard(
                             fontWeight = FontWeight.Bold
                         )
                     }
+                    
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Visueller Fluss (Optischer Fluss)",
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(modifier = Modifier.height(3.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("L: ", fontSize = 10.sp, fontFamily = FontFamily.Monospace)
+                        LinearProgressIndicator(progress = { sensory.opticFlowLeft }, modifier = Modifier.weight(1f).height(4.dp), color = ColorBehaviorExplore)
+                    }
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("R: ", fontSize = 10.sp, fontFamily = FontFamily.Monospace)
+                        LinearProgressIndicator(progress = { sensory.opticFlowRight }, modifier = Modifier.weight(1f).height(4.dp), color = ColorBehaviorExplore)
+                    }
+
                 }
 
                 // Right Column: Motivational Drives
@@ -166,6 +185,9 @@ fun SensoryMotorDashboard(
             }
 
             Spacer(modifier = Modifier.height(8.dp))
+            
+            VisualFieldView(snapshot)
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Neuromodulation Bar (Drosophila-specific: Octopamine, Dopamine, Serotonin)
             Row(

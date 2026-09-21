@@ -113,6 +113,8 @@ data class SensoryInput(
     val windVelocityMmS: Float = 0.0f,     // Mechanosensory airflow velocity
     val temperatureCelsius: Float = 24.0f, // Ambient temperature (24°C is physiological optimum)
     val sucroseContact: Float = 0.0f,      // Proboscis/tarsal gustatory sugar concentration [0.0 .. 1.0]
+    val opticFlowLeft: Float = 0.0f,       // Aggregate left optic flow magnitude
+    val opticFlowRight: Float = 0.0f,      // Aggregate right optic flow magnitude
     override val evidence: ScientificEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY
 ) : ProvenanceTagged {
     init {

@@ -43,6 +43,28 @@ object SensoryTransduction {
         val proboscisY = posY + (Math.sin(heading.toDouble()).toFloat() * 0.2f)
         val sucrose = env.sampleSucroseAt(proboscisX, proboscisY, contactDistanceMm = 2.5f)
 
+        // Simple visual sensor model (optic flow proxy / object detection)
+        var opticFlowLeft = 0.0f
+        var opticFlowRight = 0.0f
+        for (obj in env.visualObjects) {
+            val dx = obj.posXmm - posX
+            val dy = obj.posYmm - posY
+            val dist = Math.hypot(dx.toDouble(), dy.toDouble()).toFloat()
+            if (dist > 0.1f && dist < 100.0f) {
+                val angleToObject = Math.atan2(dy.toDouble(), dx.toDouble()).toFloat()
+                var relativeAngle = angleToObject - heading
+                while (relativeAngle > Math.PI) relativeAngle -= (2 * Math.PI).toFloat()
+                while (relativeAngle < -Math.PI) relativeAngle += (2 * Math.PI).toFloat()
+
+                val visualMagnitude = (obj.radiusMm / dist).coerceIn(0.0f, 1.0f) * (1.1f - obj.luminance) // High value for contrasting dark objects against bright bg
+                if (relativeAngle in 0.0f..Math.PI.toFloat()) {
+                    opticFlowLeft += visualMagnitude
+                } else if (relativeAngle in -Math.PI.toFloat()..0.0f) {
+                    opticFlowRight += visualMagnitude
+                }
+            }
+        }
+
         return SensoryInput(
             odorLeftAntenna = concLeft,
             odorRightAntenna = concRight,
@@ -50,7 +72,9 @@ object SensoryTransduction {
             lightIntensity = env.ambientLuminance,
             lightAngleRadians = 0.0f,
             temperatureCelsius = env.ambientTemperatureCelsius,
-            sucroseContact = sucrose
+            sucroseContact = sucrose,
+            opticFlowLeft = opticFlowLeft.coerceIn(0.0f, 1.0f),
+            opticFlowRight = opticFlowRight.coerceIn(0.0f, 1.0f)
         )
     }
 }
