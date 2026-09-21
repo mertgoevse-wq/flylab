@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "figma": {
+      "command": "npx",
+      "args": ["-y", "@figma/mcp-server"]
+    },
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "@supabase/supabase-mcp"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@microsoft/playwright-mcp"]
+    }
+  }
+}
