@@ -1,0 +1,1 @@
+sed -i 's/modifier = Modifier.width(115.dp)/style = androidx.compose.ui.text.TextStyle(fontFeatureSettings = "tnum"), modifier = Modifier.width(115.dp)/' app/src/main/java/com/flylab/ui/components/ExperimentControlPanel.kt

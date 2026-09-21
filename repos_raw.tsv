@@ -1,0 +1,140 @@
+punkpeye/awesome-mcp-servers	A collection of MCP servers.	95362
+microsoft/playwright-mcp	Playwright MCP server	37417
+github/github-mcp-server	GitHub's official MCP Server	33095
+appcypher/awesome-mcp-servers	Awesome MCP Servers - A curated list of Model Context Protocol servers	5776
+lharries/whatsapp-mcp	WhatsApp MCP server	6292
+wong2/awesome-mcp-servers	A curated list of Model Context Protocol (MCP) servers	4320
+BeehiveInnovations/pal-mcp-server	The power of Claude Code / GeminiCLI / CodexCLI + [Gemini / OpenAI / OpenRouter / Azure / Grok / Ollama / Custom Model / All Of The Above] working as one.	11755
+LaurieWired/GhidraMCP	MCP Server for Ghidra	10136
+firecrawl/firecrawl-mcp-server	🔥 Official Firecrawl MCP Server - Adds powerful web scraping and search to Cursor, Claude and any other LLM clients.	7494
+makenotion/notion-mcp-server	Official Notion MCP Server	4641
+awslabs/mcp	Open source MCP Servers for AWS	9716
+modelcontextprotocol/inspector	Visual testing tool for MCP servers	10914
+stickerdaniel/linkedin-mcp-server	Open-source MCP server for LinkedIn. Give Claude and any MCP-compatible AI agent access to profiles, companies, jobs, and messages.	3562
+cloudflare/mcp-server-cloudflare		4262
+jaw9c/awesome-remote-mcp-servers	Remote MCP Servers	1117
+haris-musa/excel-mcp-server	A Model Context Protocol server for Excel file manipulation	4193
+TensorBlock/awesome-mcp-servers	A comprehensive collection of Model Context Protocol (MCP) servers	858
+exa-labs/exa-mcp-server	Exa MCP for web search and web crawling!	5034
+antvis/mcp-server-chart	🤖 A visualization mcp & skills contains 25+ visual charts using @antvis. Using for chart generation and data analysis.	4377
+financial-datasets/mcp-server	An MCP server for interacting with the Financial Datasets stock market API.	2299
+HugoMatilla/Android-Design-System-and-Theming-Typography	Companion App for the Article: "Android Design System and Theming: Typography" 	33
+wanteddev/montage-android	🎨 Wanted Android Design System - Montage	38
+Yang-Ya-Chao/android-design-system-skills	Android Jetpack Compose 设计系统 Skills：Hyper Neumorphic / Neumorphism / Glassmorphism，含 22+ 通用组件、深浅色、触觉反馈、双引擎切换	14
+HugoMatilla/Android-Design-System-and-Theming-Colors	Companion App for the Article: "Android Design System and Theming: Colors"	15
+Trendyol/komposto	Android design system built with Jetpack Compose. 20+ reusable UI components with design tokens, RTL support, and accessibility features.	37
+Team-B1ND/dui-android	DUI : Dodam-UI / Dodam Android Design System with Jetpack Compose	26
+Infomaniak/android-design-system		10
+inconcept/android-design-system	Easy to use, customizable, Android design-system library	9
+chihung93/android-design-system-naming-conventions	Design system naming conventions in Modularization on Android	9
+dealicious-inc/ssm-mobile-android-design-system	신상마켓 디자인 시스템 컴포넌트 (Android)	3
+greenlabsfin/seed-android-design-system	Greenlabs Financial Android Design System Libraries	2
+tssA8/AndroidDesignSystem	AndroidDesignSystem	0
+EthereumPhone/AndroidDesignSystem	A custom UI library used by ethOS system applications	1
+HugoMatilla/Android-Design-System-and-Theming-Cyberpunk	Companion project for talk Cyberpunk Theming 2077 - Android Design System and Theming.	2
+pjhjohn/AndroidDesignSystemGenerator	Code Generator for Android Design System	0
+Team-C0nnect/qvick-design-system-Android	Qvick V3 Android Design System	2
+AtifAbbAsi19/AndroiDesignSystem	Android Design System	0
+hendra-marihot/android-design-system	Flavor — a Jetpack Compose design system library: design tokens, Material 3 components, and a catalog app	0
+ersandip94/android-design-system	Jetpack Compose design system featuring design tokens, reusable components, accessibility, custom lint checks, screenshot testing, modular Clean Architecture, MVVM, and Hilt.	0
+ux4g-negd/android_design_system	Android Compose Components lib	0
+francescou/docker-compose-ui	web interface for Docker Compose	1545
+morganstanley/ComposeUI	A .NET Core based, WebView2 using UI Container for hybrid web-desktop applications	76
+saket/swipe	Swipe gesture actions for Compose UI	852
+yangqi1024/jetpack-compose-ui	🔥🔥🔥Jetpack Compose UI组件库包含banner、collapse、steps、noticebar、selectcity、indicator、searchbar、cell、skeleton、segmented、number-keyboard、rate、swipe、address-list、图片预览、状态页...	230
+Gurupreet/ComposeCookBook	A Collection on all Jetpack compose UI elements, Layouts, Widgets and Demo screens to see it's potential	6879
+saket/telephoto	Building blocks for designing media experiences in Compose UI	1559
+gastsail/JetExample	Jetpack Compose UI components examples	223
+Peakmain/ComposeUI	jetpack compose实战项目	42
+iampawan/JetpackComposeLooks	Compose UI Samples	40
+Dinesh2510/Jetpack-Compose-UI-Components-Material-3	Material Components  Jetpack Compose offers an implementation of Material Design, a comprehensive design system for creating digital interfaces. Material Components such as buttons, cards, and switches, and layouts like Scaffold are available as composable functions.	121
+Hiten24/Compose-Ui-Templates	Collection of Compose UI Templates	48
+KaushalVasava/ComposeUI	This repo used to create common UIs using Jetpack compose.	28
+hamidrezasahraei/MusicAppComposeUI	A sample Music Player project that help you learn about Compose in Android. Note that this app only contain UI and has no logic. The design is inspired from this and this.	60
+SimformSolutionsPvtLtd/SSComposeCookBook	A Collection of major Jetpack compose UI components which are commonly used.🎉🔝👌	726
+Popalay/Tracktor-ComposeUI	Track the progress of anything in one place	42
+airbnb/Showkase	🔦 Showkase is an annotation-processor based Android library that helps you organize, discover, search and visualize Jetpack Compose UI elements	2319
+levinzonr/jetpack-compose-ui-arch-plugin	Jetpack Compose UI Architecture Plugin provides a set of templates that to make the development of new Jetpack Compose features faster.	59
+Raziur306/E-commerce-Complete-Jetpack-Compose-UI	E-commerce App UI design using Jetpack Compose Android.	106
+Chozzle/compose-macos-theme	MacOS theme for JetBrains Compose UI framework	280
+vipulasri/compose-slack-desktop	A Slack demo app for desktop using Jetpack Compose UI toolkit	298
+infix-de/testBalloon	Kotlin testing made easy, everywhere.	255
+burakeregar/KotlinMvpArchitecture	Clean MVP Architecture with Dagger2 + Retrofit2 + Mockito + Fresco + EasiestGenericRecyclerAdapter using Kotlin. Added Unit Tests(Kotlin Tests)!	141
+burakeregar/KotlinRxMvpArchitecture	Clean MVP Architecture with RxJava + Dagger2 + Retrofit2 + Mockito + Fresco + EasiestGenericRecyclerAdapter using Kotlin. Includes Unit Tests(Kotlin Tests)!	98
+anschnapp/mutflow	Mutation testing inside your Kotlin tests. Compile once, catch gaps.	32
+maeharin/factlin	Kotlin test fixture generator from existing database schema	37
+odd-poet/kotlin-expect	assertion library for kotlin test. 	4
+nbirillo/kotlin-test-task	kotlin-test-task	1
+pnowy/kotlin-spek-sample	Examples of Spek - kotlin test specification framework	4
+ludenus/cucumber-kotlin-skeleton	Sample Kotlin test project with Gradle, Cucumber, testNG, Allure, Selenium	7
+michal-marciniec/loyalty-program-api	Developer-friendly API for building loyalty rewards integrations into your app. Techologies: Java 8, Spring (Boot, Data, Security), Hibernate, Flyway, QueryDSL, Lombok, ModelMapper, Kotlin Tests.	15
+aldefy/MVVM	Note taking app | written in Kotlin - testing MVVM architecture with arch components	10
+kamildziadek/allure-kotlin	Allure Integrations for Java & Kotlin test frameworks with Android support	8
+maiatoday/Hello8Ball	Sampler app for Kotlin testing	8
+ckk914/helloKotlin	⚝ Kotlin test	5
+LukynkaCZE/Astral	Step-based kotlin testing framework	5
+joamag/hello-kotlin	Simple Kotlin test	3
+kotlin-hands-on/spring-time-in-kotlin-episode4	Sample application for Spring Time in Kotlin - Testing with JUnit. See www.youtube.com/kotlin	4
+bright/shouldko	Better assertion messages for your Kotlin tests	5
+QAutomatron/kaper	Kotlin test automation framework for Selenium/Appium	5
+pepepe/kotlin	Kotlin test	2
+davgit/flyLabel.js	Make your labels fly.	0
+ssafarik/Flylab	Software platform for Flyranch experiments & hardware.	5
+Sudharsanselvaraj/Flylab		7
+a100q100/FlyLab	Just Study Javascript Technology about pattern\\es6\\node\\promise\\experiment for blog and so on	0
+sharan-gh/flylab	flylab	0
+TMarv1n/flylab	flylab	0
+twalacs/twalacs	Unisa_flylab	0
+robertschank/flylab		1
+MichaelMobius/flylab		0
+DJLougen/flylab	A scientifically transparent WebMCP virtual Drosophila neuroethology lab.	0
+renanamal/flylab		0
+Bluebottel/flylab	Tableaunoir design propsal	0
+comfuture/flylab	Live whole-brain Drosophila connectome simulation with an embodied fly in the browser	0
+berrybeans/FlyLab	ITS FLYLAB BOYS	0
+mikolajmikolajczak0108/flylab	FLYLAB: interaktywne laboratorium konektomu muszki owocowej, arena 3D i eksperymentalna neuroewolucja. Node.js, Three.js, WebSocket i PyTorch CUDA.	0
+MelissaDJENNAD/Flylab		0
+komen205/flylab	Experimental fly-connectome Minecraft bot with a lightweight live viewer. Fixed neural simulation; no training.	0
+flylabmkt-afk/flylab		0
+Prathamesh-Pawar/flylab		0
+wecoinweb3/flylab	果蝇学习	0
+philshiu/Drosophila_brain_model	A leaky integrate-and-fire computational model of the Drosophila brain	335
+eonsystemspbc/fly-brain	Emulation of the Drosophila Fly brain: Brian2, Brian2CUDA, PyTorch, NEST GPU, and neuromorphic chips	878
+TuragaLab/flybody	MuJoCo fruit fly body model and locomotion RL tasks	930
+TuGengs/Drosophila_Distinguish	基于android的果蝇识别app ( 采用随机森林，神经网络等多种算法 ) 	91
+bergmanlab/drosophila-transposons	Drosophila transposable element canonical sequences	30
+neurokernel/neurokernel	Neurokernel Project	581
+snedea/flybrain	Interactive Drosophila brain simulation — 139K LIF neurons from the FlyWire FAFB connectome	143
+unidesigner/groundtruth-drosophila-vnc	Segmented anisotropic ssTEM dataset of neural tissue	29
+VirtualFlyBrain/DrosAdultBRAINdomains	Drosophila Adult Brain Domains	15
+gilestrolab/pySolo	A software for sleep analysis in Drosophila	8
+NeLy-EPFL/DeepFly3D	Motion capture (markerless 3D pose estimation) pipeline and helper GUI for tethered Drosophila.	101
+FlyBase/drosophila-anatomy-developmental-ontology	The home of the Drosophila anatomy ontology	23
+Frankweb33/flybrain-robot-bridge	Experimental Drosophila-inspired camera-to-robot bridge. Working mock neural backend, optical flow, IMU feedback and UDP motor control. MaleCNS integration planned.	214
+yiliao1022/TADEvoDrosophila	Code for TAD_SV project	11
+neurodata/maggot_models	Modeling Drosophila larval connectomes	7
+strawlab/drosophila_eye_map	Viewing directions (eye map) of each Drosophila ommatidium	11
+shendurelab/fly-atac	Code relevant to sci-ATAC-seq of Drosophila embryogenesis.	22
+reiserlab/male-drosophila-visual-system-connectome-code	Supplemental source code for Nern et al. 2025: "Connectome-driven neural inventory of a complete visual system" (https://doi.org/10.1038/s41586-025-08746-0). The Cell type explorer repository is at https://github.com/reiserlab/male-drosophila-visual-system-connectome	12
+cengique/drosophila-aCC-L3-motoneuron-model	Single compartmental, ball-and-stick models implemented in XPP and full morphological model in Neuron. 	3
+justin-lack/Drosophila-Genome-Nexus	The Drosophila Genome Nexus is a repository of more than 600 Drosophila melanogaster genomes from Africa, Europe, and North America. All scripts and pipeline commands used to generate these genome sequences are available here.	7
+rougier/scientific-visualization-book	An open access book on scientific visualization using python and matplotlib	11552
+glumpy/glumpy	Python+Numpy+OpenGL: fast, scalable and beautiful scientific visualization	1278
+jupyter-widgets-contrib/ipygany	3-D Scientific Visualization in the Jupyter Notebook	493
+rougier/python-opengl	An open access book on Python, OpenGL and Scientific Visualization, Nicolas P. Rougier, 2018	653
+ravidavi/OpenFrames	Realtime interactive scientific visualization API	39
+ASPP/2021-bordeaux-dataviz	Scientific Visualization Crash Course (Python & Matplotlib)	23
+seelabutk/tapestry	Scientific Visualization as a Microservice	35
+mjucker/pv_atmos	Python scripting for scientific visualization software ParaView. Applied to atmospheric netCDF data.	53
+Kitware/vtk-wasm	Use VTK for 3D scientific visualization in browsers through WebAssembly	27
+natevm/BSDF-Visualizer	Project for scientific visualization	18
+QuantStack/GanyJS	3-D Scientific visualization using ThreeJS	22
+bestimmaa/ExSciVis	Framework Excercise Scientific Visualization	0
+leios/SciVL	Scientific Visualization Library	8
+papagiannakis/pyGLV	computer Graphics for deep Learning and scientific Visualization	7
+matgarate/Blender_Bvoxer	Codes and blendfiles to use voxel data for scientific visualization in blender.	20
+swamilikes2code/Python_based_Interactive_Scientific_Visualization	Python Based Interactive Scientific Visualization: Bokeh is used as the base package for visualizations.	9
+ECMWFCode4Earth/sci_vis	BVtk: scientific visualization inside Blender	10
+HamidGadirov/OpticalFlowSciVis	Flow extraction for Scientific Visualization	18
+fos/fos	Fos is a 3D engine in Python and OpenGL which concentrates on scientific visualization	23
+yennnie/ExSciVis2019	Lab Class Scientific Visualization 2019	1
