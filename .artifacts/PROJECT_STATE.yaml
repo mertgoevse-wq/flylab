@@ -3,9 +3,13 @@ status:
   m2: complete
   m3: complete
   m4: complete
+  m5: complete
+  m6: complete
+  m7: complete
   m8: complete
   m9: complete
   m10: complete
   m11: complete
   m12: complete
-current_focus: "Connectome Explorer / Neural Perturbation (M13-M14)"
+  m13: complete
+current_focus: "FlyLabZoo / Multi-fly Swarm Engine (M15+)"

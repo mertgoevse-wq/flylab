@@ -135,3 +135,11 @@ DESCRIPTION: World -> Eyes -> Visual sensor model. View linked to what the fly r
 DEPENDENCIES: M11-001
 IMPLEMENTATION STATUS: Complete
 TEST STATUS: Complete
+
+## M13 - CONNECTOME EXPLORER & NEURAL PERTURBATION
+TASK-ID: M13-001
+DOMAIN: Simulation & UI
+DESCRIPTION: Implement Connectome Explorer screen. Enable optogenetic perturbation for individual neurons and view their synaptic connectivity and real-time activity rates.
+DEPENDENCIES: M12-001
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete

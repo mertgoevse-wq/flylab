@@ -58,6 +58,7 @@ class SimulationEngine(
 
     // Experimental optogenetic/pharmacological perturbations per brain region (1.0 = normal, 0.0 = silenced)
     val regionPerturbations = mutableMapOf<NeuropilId, Float>()
+    val neuronPerturbations = mutableMapOf<String, Float>()
 
     // Ring-buffer/List of historical snapshots for deterministic time-travel
     private val _history = mutableListOf<SimulationSnapshot>()
@@ -83,6 +84,7 @@ class SimulationEngine(
             synapticOverlays = currentSynapticOverlays,
             sensoryInput = currentSensoryInput,
             regionPerturbations = regionPerturbations,
+            neuronPerturbations = neuronPerturbations,
             dtSeconds = dtSeconds
         )
         currentFiringRates = dynamicsResult.firingRates
@@ -164,6 +166,8 @@ class SimulationEngine(
         currentFiringRates = snapshot.firingRates
         currentRegionStates = snapshot.regionStates
         currentSynapticOverlays = snapshot.synapticOverlays
+        neuronPerturbations.clear()
+        neuronPerturbations.putAll(snapshot.neuronPerturbations)
         currentBehavior = snapshot.activeBehavior
 
         // Re-align PRNG seed deterministically
@@ -186,6 +190,7 @@ class SimulationEngine(
         currentMotorCommand = MotorCommand.IDLE
         currentBehavior = BehaviorType.EXPLORING
         regionPerturbations.clear()
+        neuronPerturbations.clear()
         _history.clear()
         recordSnapshot()
     }
@@ -193,6 +198,15 @@ class SimulationEngine(
     /**
      * Perturbs (silences or excites) a specific brain region.
      */
+    
+    fun setNeuronPerturbation(neuronId: String, factor: Float) {
+        if (factor == 1.0f) {
+            neuronPerturbations.remove(neuronId)
+        } else {
+            neuronPerturbations[neuronId] = factor.coerceIn(0.0f, 3.0f)
+        }
+    }
+
     fun setRegionPerturbation(region: NeuropilId, factor: Float) {
         if (factor == 1.0f) {
             regionPerturbations.remove(region)
@@ -212,6 +226,7 @@ class SimulationEngine(
             firingRates = currentFiringRates,
             regionStates = currentRegionStates,
             synapticOverlays = currentSynapticOverlays,
+            neuronPerturbations = neuronPerturbations.toMap(),
             activeBehavior = currentBehavior,
             seed = seed
         )

@@ -16,6 +16,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountTree
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Search
 
@@ -45,6 +46,7 @@ import com.flylab.ui.components.JournalDialog
 import com.flylab.ui.components.ProvenanceBadge
 import com.flylab.ui.components.SensoryMotorDashboard
 import com.flylab.ui.components.Viewport3DCanvas
+import com.flylab.ui.components.ConnectomeExplorerScreen
 import kotlinx.coroutines.delay
 
 /**
@@ -145,6 +147,15 @@ fun FlyLabRootScreen() {
                     selected = currentTab == 1,
                     onClick = { currentTab = 1 },
                     icon = { Icon(
+                        imageVector = Icons.Default.AccountTree,
+                        contentDescription = "Connectome"
+                    ) },
+                    label = { Text("Connectome") }
+                )
+                NavigationBarItem(
+                    selected = currentTab == 2,
+                    onClick = { currentTab = 2 },
+                    icon = { Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Genome"
                     ) },
@@ -233,6 +244,13 @@ fun FlyLabRootScreen() {
                     }
                 )
             }
+            } else if (currentTab == 1) {
+                ConnectomeExplorerScreen(
+                    snapshot = currentSnapshot,
+                    onNeuronPerturbationChanged = { neuronId, factor ->
+                        engine.setNeuronPerturbation(neuronId, factor)
+                    }
+                )
             } else {
                 GenomeExplorerScreen()
             }

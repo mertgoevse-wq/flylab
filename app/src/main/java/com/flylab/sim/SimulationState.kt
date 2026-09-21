@@ -26,6 +26,7 @@ data class SimulationSnapshot(
     val firingRates: Map<String, Float>,
     val regionStates: Map<NeuropilId, BrainRegionState>,
     val synapticOverlays: Map<String, SynapseSimulationOverlay>,
+    val neuronPerturbations: Map<String, Float> = emptyMap(),
     val activeBehavior: BehaviorType,
     val seed: Long,
     override val evidence: ScientificEvidence = ScientificEvidence.SIMULATED_RUNTIME_OVERLAY

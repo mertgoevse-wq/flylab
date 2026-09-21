@@ -28,6 +28,7 @@ object NeuralDynamics {
         synapticOverlays: Map<String, SynapseSimulationOverlay>,
         sensoryInput: SensoryInput,
         regionPerturbations: Map<NeuropilId, Float> = emptyMap(),
+        neuronPerturbations: Map<String, Float> = emptyMap(),
         dtSeconds: Float
     ): DynamicsStepResult {
         val dtMs = dtSeconds * 1000.0f
@@ -73,8 +74,9 @@ object NeuralDynamics {
             val targetRate = (1.0f / (1.0f + Math.exp((-ACTIVATION_GAIN * (current - FIRING_THRESHOLD)).toDouble()))).toFloat()
 
             // Apply experimental optogenetic / pharmacological perturbation factor if present
-            val perturbation = regionPerturbations[neuron.neuropil] ?: 1.0f
-            val perturbedTarget = (targetRate * perturbation).coerceIn(0.0f, 1.0f)
+            val regionPert = regionPerturbations[neuron.neuropil] ?: 1.0f
+            val neuronPert = neuronPerturbations[neuron.id] ?: 1.0f
+            val perturbedTarget = (targetRate * regionPert * neuronPert).coerceIn(0.0f, 1.0f)
 
             val dRate = ((perturbedTarget - oldRate) / TAU_MEMBRANE_MS) * dtMs
             updatedRates[id] = (oldRate + dRate).coerceIn(0.0f, 1.0f)
