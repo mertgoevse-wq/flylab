@@ -2,5 +2,6 @@ status:
   m1: complete
   m2: complete
   m3: complete
-  m4: in_progress
-current_focus: "Visually displaying Learning/Plasticity modifications inside UI (M4-001)"
+  m4: complete
+  m8: complete
+current_focus: "Genomics Foundation Domain Models and UI"

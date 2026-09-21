@@ -12,6 +12,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Search
+
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -69,6 +76,8 @@ fun FlyLabRootScreen() {
         mutableStateOf(engine.history.last())
     }
 
+    var currentTab by remember { mutableStateOf(0) }
+
     // Coroutine simulation loop
     LaunchedEffect(isPlaying, playbackSpeed, engine) {
         while (isPlaying) {
@@ -120,6 +129,28 @@ fun FlyLabRootScreen() {
                     containerColor = MaterialTheme.colorScheme.surface
                 )
             )
+        },
+        bottomBar = {
+            androidx.compose.material3.NavigationBar {
+                NavigationBarItem(
+                    selected = currentTab == 0,
+                    onClick = { currentTab = 0 },
+                    icon = { Icon(
+                        imageVector = Icons.Default.Build,
+                        contentDescription = "Simulation"
+                    ) },
+                    label = { Text("Simulation") }
+                )
+                NavigationBarItem(
+                    selected = currentTab == 1,
+                    onClick = { currentTab = 1 },
+                    icon = { Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Genome"
+                    ) },
+                    label = { Text("Genome") }
+                )
+            }
         }
     ) { paddingValues ->
         Surface(
@@ -128,6 +159,7 @@ fun FlyLabRootScreen() {
                 .padding(paddingValues),
             color = MaterialTheme.colorScheme.background
         ) {
+            if (currentTab == 0) {
             Column(modifier = Modifier.fillMaxSize()) {
                 // 1. 3D Fly Viewport (Flexible weight: 45% of screen height)
                 Box(modifier = Modifier.weight(0.42f).fillMaxWidth()) {
@@ -200,6 +232,9 @@ fun FlyLabRootScreen() {
                         currentSnapshot = engine.history.last()
                     }
                 )
+            }
+            } else {
+                GenomeExplorerScreen()
             }
         }
 

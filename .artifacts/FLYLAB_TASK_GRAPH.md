@@ -88,3 +88,34 @@ TASK-ID: M7-001
 DOMAIN: QA & Release
 DESCRIPTION: Polish and verify all P1 specs (offline support, dual languages, performance constraints, provenance UI completeness).
 DEPENDENCIES: M5-001, M6-001
+
+## M8 - GENOMICS FOUNDATION
+TASK-ID: M8-001
+DOMAIN: Simulation & UI
+DESCRIPTION: Build the initial genome subsystem: species, chromosome, coordinates, genes, annotations, sequences, variants, and provenance modeling.
+DEPENDENCIES: M7-001
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
+
+TASK-ID: M8-002
+DOMAIN: Simulation & UI
+DESCRIPTION: Implement interactive computational mutation experiments (point mutation, insertion/deletion, phenotype mapping).
+DEPENDENCIES: M8-001
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
+
+## M9 - DEVELOPMENTAL ORGANISM MODEL
+TASK-ID: M9-001
+DOMAIN: Simulation
+DESCRIPTION: Build a modular developmental framework interpreting the genome, modeling cell differentiation, and generating synthetic anatomy.
+DEPENDENCIES: M8-001
+IMPLEMENTATION STATUS: Planned
+TEST STATUS: Planned
+
+## M10 - ANATOMY / ORGAN SYSTEMS
+TASK-ID: M10-001
+DOMAIN: 3D Visualization
+DESCRIPTION: Upgrade the fly from a visualization into an inspectable simulated organism with detailed body organs.
+DEPENDENCIES: M9-001
+IMPLEMENTATION STATUS: Planned
+TEST STATUS: Planned
