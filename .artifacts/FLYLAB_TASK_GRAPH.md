@@ -22,14 +22,16 @@ DESCRIPTION: Stabilize Android build, Gradle wrapper, ensure project compiles an
 DEPENDENCIES: ORG-001
 OUTPUTS: Working APK via CLI
 RELEVANT SKILLS: android-profiler, testing-setup
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
 
 TASK-ID: M0-002
 DOMAIN: UI/UX / Theme
 DESCRIPTION: Implement calm, scientific dark/light theme overriding default Material colors. Establish structural directories.
 DEPENDENCIES: M0-001
 RELEVANT SKILLS: ui-ux-pro-max, mobile-android-design, frontend-design
-IMPLEMENTATION STATUS: Pending
-TEST STATUS: Pending
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
 
 ## M1 - STATIC FLY
 TASK-ID: M1-001
@@ -37,8 +39,8 @@ DOMAIN: 3D Visualization
 DESCRIPTION: Render basic 3D fly (abstract/textbook style) via Canvas/OpenGL, implement rotate/zoom/tap.
 DEPENDENCIES: M0-002
 RELEVANT SKILLS: mobile-android-design, optimize, dataviz
-IMPLEMENTATION STATUS: Pending
-TEST STATUS: Pending
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
 
 ## M2 - LIVING WORLD
 TASK-ID: M2-001
@@ -55,7 +57,8 @@ DOMAIN: UI/UX
 DESCRIPTION: Render the causal chain (Stimulus -> Sense -> Brain -> Motor -> Behavior) with click-to-expand evidence-labeled steps.
 DEPENDENCIES: M2-001
 RELEVANT SKILLS: dataviz, frontend-design, writing-guidelines
-IMPLEMENTATION STATUS: Pending
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
 
 ## M4 - LEARNING LOOP
 TASK-ID: M4-001

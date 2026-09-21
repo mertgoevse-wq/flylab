@@ -32,6 +32,7 @@ import com.flylab.experiment.ExperimentConfiguration
 import com.flylab.render3d.RenderLayers
 import com.flylab.sim.SimulationEngine
 import com.flylab.ui.components.BrainRegionInspector
+import com.flylab.ui.components.CausalChainView
 import com.flylab.ui.components.ExperimentControlPanel
 import com.flylab.ui.components.JournalDialog
 import com.flylab.ui.components.ProvenanceBadge
@@ -149,6 +150,12 @@ fun FlyLabRootScreen() {
 
                 // 3. Sensory-Motor & Neuromodulator Dashboard
                 SensoryMotorDashboard(
+                    snapshot = currentSnapshot,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                )
+
+                // 3.5 Causal Chain Step-by-Step UI
+                CausalChainView(
                     snapshot = currentSnapshot,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                 )
