@@ -68,6 +68,30 @@ enum class OdorType(
             citation = "Kwon et al. (2010) Curr Biol 20:1672-1679.",
             notes = "TRP channel and olfactory receptor mediated avoidance."
         )
+    ),
+
+    OCTANOL(
+        scientificName = "3-Octanol",
+        germanName = "3-Octanol",
+        naturalValence = -0.50f,
+        relevantGlomerulus = "Multiple",
+        evidence = ScientificEvidence(
+            level = ProvenanceLevel.PUBLISHED,
+            citation = "Keene & Waddell (2007) Nat Rev Neurosci.",
+            notes = "Common classical conditioning odorant, often paired with MCH."
+        )
+    ),
+
+    METHYLCYCLOHEXANOL(
+        scientificName = "4-Methylcyclohexanol (MCH)",
+        germanName = "4-Methylcyclohexanol",
+        naturalValence = -0.60f,
+        relevantGlomerulus = "Multiple",
+        evidence = ScientificEvidence(
+            level = ProvenanceLevel.PUBLISHED,
+            citation = "Keene & Waddell (2007) Nat Rev Neurosci.",
+            notes = "Common classical conditioning odorant, often paired with Octanol."
+        )
     );
 
     companion object {

@@ -103,9 +103,10 @@ class NeuralDynamicsTest {
         val overlays = mapOf(
             "syn_kc001_mbon_aversive" to com.flylab.domain.model.SynapseSimulationOverlay(
                 synapseId = "syn_kc001_mbon_aversive",
-                deltaWeight = -0.3f,
-                lastModifiedStep = 100L,
-                lastModifiedTimestampMs = 5000L
+                baselineWeight = 1.0f,
+                currentWeight = 0.7f,
+                lastUpdateStep = 100L,
+                lastUpdateTimestampMs = 5000L
             )
         )
 
@@ -177,7 +178,7 @@ class NeuralDynamicsTest {
         val alState = result.regionStates[NeuropilId.ANTENNAL_LOBE]
         assertNotNull("Antennal lobe region state should exist", alState)
         assertTrue("Antennal lobe mean activity should reflect PN activity",
-            alState?.meanActivity!! > 0f)
+            alState?.meanActivation!! > 0f)
     }
 
     @Test
@@ -203,8 +204,8 @@ class NeuralDynamicsTest {
             dtSeconds = 0.05f
         )
 
-        val normalMB = normalResult.regionStates[NeuropilId.MUSHROOM_BODY]?.meanActivity ?: 0f
-        val excitedMB = excitedResult.regionStates[NeuropilId.MUSHROOM_BODY]?.meanActivity ?: 0f
+        val normalMB = normalResult.regionStates[NeuropilId.MUSHROOM_BODY]?.meanActivation ?: 0f
+        val excitedMB = excitedResult.regionStates[NeuropilId.MUSHROOM_BODY]?.meanActivation ?: 0f
 
         assertTrue("Excitatory perturbation should increase mushroom body activity",
             excitedMB > normalMB)

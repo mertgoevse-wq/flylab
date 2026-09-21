@@ -16,7 +16,7 @@ class SensoryTransductionTest {
     @Test
     fun `bilateral antennal positions are correctly offset from head center`() {
         val fly = Fly().copy(
-            behavioralState = fly.behavioralState.copy(
+            behavioralState = Fly().behavioralState.copy(
                 posXmm = 0f,
                 posYmm = 0f,
                 headingRadians = 0f // Facing right along X axis
@@ -47,7 +47,7 @@ class SensoryTransductionTest {
         )
 
         val fly = Fly().copy(
-            behavioralState = fly.behavioralState.copy(
+            behavioralState = Fly().behavioralState.copy(
                 posXmm = 0f,
                 posYmm = 0f,
                 headingRadians = 0f // Facing source directly
@@ -80,7 +80,7 @@ class SensoryTransductionTest {
         )
 
         val fly = Fly().copy(
-            behavioralState = fly.behavioralState.copy(
+            behavioralState = Fly().behavioralState.copy(
                 posXmm = 100f, // Very far from source
                 posYmm = 100f,
                 headingRadians = 0f
@@ -109,7 +109,7 @@ class SensoryTransductionTest {
         )
 
         val fly = Fly().copy(
-            behavioralState = fly.behavioralState.copy(
+            behavioralState = Fly().behavioralState.copy(
                 posXmm = 0f,
                 posYmm = 0f,
                 headingRadians = 0f
@@ -125,7 +125,7 @@ class SensoryTransductionTest {
     @Test
     fun `sensory input reflects environment ambient conditions`() {
         val customTemp = 28.5f
-        val customLux = 1500f
+        val customLux = 0.8f
 
         val env = Environment(
             ambientTemperatureCelsius = customTemp,
@@ -154,7 +154,7 @@ class SensoryTransductionTest {
         )
 
         val fly = Fly().copy(
-            behavioralState = fly.behavioralState.copy(
+            behavioralState = Fly().behavioralState.copy(
                 posXmm = 3f,
                 posYmm = 3f,
                 headingRadians = 0.785f // 45 degrees
