@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.flylab.domain.model.BehaviorType
 import com.flylab.domain.model.NeuromodulatorType
 import com.flylab.sim.SimulationSnapshot
+import com.flylab.ui.theme.*
 
 /**
  * Dashboard monitoring real-time sensory inputs, internal drives, neuromodulation, and motor status.
@@ -57,13 +58,13 @@ fun SensoryMotorDashboard(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     val behaviorColor = when (behavior) {
-                        BehaviorType.APPROACHING -> Color(0xFF059669)
-                        BehaviorType.AVOIDING -> Color(0xFFDC2626)
-                        BehaviorType.FEEDING -> Color(0xFFD97706)
-                        BehaviorType.ORIENTING -> Color(0xFF2563EB)
-                        BehaviorType.EXPLORING -> Color(0xFF0D9488)
-                        BehaviorType.RESTING -> Color(0xFF64748B)
-                        BehaviorType.GROOMING -> Color(0xFF7C3AED)
+                        BehaviorType.APPROACHING -> ColorBehaviorApproach
+                        BehaviorType.AVOIDING -> ColorBehaviorAvoid
+                        BehaviorType.FEEDING -> ColorBehaviorFeed
+                        BehaviorType.ORIENTING -> ColorBehaviorOrient
+                        BehaviorType.EXPLORING -> ColorBehaviorExplore
+                        BehaviorType.RESTING -> ColorBehaviorRest
+                        BehaviorType.GROOMING -> ColorBehaviorGroom
                     }
 
                     Box(
@@ -111,7 +112,7 @@ fun SensoryMotorDashboard(
                         LinearProgressIndicator(
                             progress = { sensory.odorLeftAntenna },
                             modifier = Modifier.weight(1f).height(4.dp),
-                            color = Color(0xFF059669)
+                            color = ColorBehaviorApproach
                         )
                     }
                     Spacer(modifier = Modifier.height(2.dp))
@@ -120,7 +121,7 @@ fun SensoryMotorDashboard(
                         LinearProgressIndicator(
                             progress = { sensory.odorRightAntenna },
                             modifier = Modifier.weight(1f).height(4.dp),
-                            color = Color(0xFF059669)
+                            color = ColorBehaviorApproach
                         )
                     }
 
@@ -128,7 +129,7 @@ fun SensoryMotorDashboard(
                         Spacer(modifier = Modifier.height(3.dp))
                         Text(
                             text = "Zuckerkontakt: ${(sensory.sucroseContact * 100).toInt()}%",
-                            color = Color(0xFFD97706),
+                            color = ColorBehaviorFeed,
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -149,7 +150,7 @@ fun SensoryMotorDashboard(
                         LinearProgressIndicator(
                             progress = { needs.hunger },
                             modifier = Modifier.weight(1f).height(4.dp),
-                            color = Color(0xFFD97706)
+                            color = ColorBehaviorFeed
                         )
                     }
                     Spacer(modifier = Modifier.height(2.dp))
@@ -158,7 +159,7 @@ fun SensoryMotorDashboard(
                         LinearProgressIndicator(
                             progress = { needs.fatigue },
                             modifier = Modifier.weight(1f).height(4.dp),
-                            color = Color(0xFF64748B)
+                            color = ColorBehaviorRest
                         )
                     }
                 }
@@ -176,9 +177,9 @@ fun SensoryMotorDashboard(
                 val da = fly.neuromodulators[NeuromodulatorType.DOPAMINE]?.concentration ?: 0.15f
                 val ht = fly.neuromodulators[NeuromodulatorType.SEROTONIN]?.concentration ?: 0.15f
 
-                ModulatorPill(name = "OA", value = oa, color = Color(0xFF10B981))
-                ModulatorPill(name = "DA", value = da, color = Color(0xFF3B82F6))
-                ModulatorPill(name = "5-HT", value = ht, color = Color(0xFF8B5CF6))
+                ModulatorPill(name = "OA", value = oa, color = ColorModulatorOctopamine)
+                ModulatorPill(name = "DA", value = da, color = ColorModulatorDopamine)
+                ModulatorPill(name = "5-HT", value = ht, color = ColorModulatorSerotonin)
 
                 Text(
                     text = "Distanz: ${String.format("%.1f", fly.behavioralState.distanceTraveledMm)} mm",

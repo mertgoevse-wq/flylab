@@ -136,7 +136,7 @@ fun ExperimentControlPanel(
                     fontSize = 11.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.width(115.dp)
+                    style = androidx.compose.ui.text.TextStyle(fontFeatureSettings = "tnum"), modifier = Modifier.width(115.dp)
                 )
 
                 Slider(
