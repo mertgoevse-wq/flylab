@@ -109,13 +109,13 @@ TASK-ID: M9-001
 DOMAIN: Simulation
 DESCRIPTION: Build a modular developmental framework interpreting the genome, modeling cell differentiation, and generating synthetic anatomy.
 DEPENDENCIES: M8-001
-IMPLEMENTATION STATUS: Planned
-TEST STATUS: Planned
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
 
 ## M10 - ANATOMY / ORGAN SYSTEMS
 TASK-ID: M10-001
 DOMAIN: 3D Visualization
 DESCRIPTION: Upgrade the fly from a visualization into an inspectable simulated organism with detailed body organs.
 DEPENDENCIES: M9-001
-IMPLEMENTATION STATUS: Planned
-TEST STATUS: Planned
+IMPLEMENTATION STATUS: Complete
+TEST STATUS: Complete
