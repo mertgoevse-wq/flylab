@@ -9,10 +9,6 @@ import com.flylab.domain.model.OdorType
  */
 object EnvironmentFactory {
     
-    /**
-     * Creates an open-field arena with a single appetitive odor gradient 
-     * leading to a central reward source.
-     */
     fun createOpenFieldNavigation(): Environment {
         return Environment(
             arenaRadiusMm = 50.0f,
@@ -30,10 +26,6 @@ object EnvironmentFactory {
         )
     }
 
-    /**
-     * Creates a multi-odor discrimination task with a rewarding odor 
-     * and a punishing/aversive odor placed at opposing ends.
-     */
     fun createTwoChoiceDiscrimination(): Environment {
         return Environment(
             arenaRadiusMm = 40.0f,
@@ -52,6 +44,32 @@ object EnvironmentFactory {
                     odorType = OdorType.GEOSMIN,
                     posXmm = 20.0f,
                     posYmm = 20.0f,
+                    emissionRate = 0.8f,
+                    plumeSigmaMm = 15.0f,
+                    sucroseConcentration = 0.0f
+                )
+            )
+        )
+    }
+    
+    fun createReversalLearningArena(): Environment {
+        return Environment(
+            arenaRadiusMm = 45.0f,
+            sources = listOf(
+                OdorSource(
+                    id = "zone_a",
+                    odorType = OdorType.OCTANOL,
+                    posXmm = -25.0f,
+                    posYmm = 0.0f,
+                    emissionRate = 0.8f,
+                    plumeSigmaMm = 15.0f,
+                    sucroseConcentration = 1.0f
+                ),
+                OdorSource(
+                    id = "zone_b",
+                    odorType = OdorType.METHYLCYCLOHEXANOL,
+                    posXmm = 25.0f,
+                    posYmm = 0.0f,
                     emissionRate = 0.8f,
                     plumeSigmaMm = 15.0f,
                     sucroseConcentration = 0.0f
