@@ -62,7 +62,7 @@ fun FlyLabRootScreen() {
 
     val engine = remember(currentConfig.id, currentConfig.seed) {
         SimulationEngine(
-            initialFly = currentConfig.initialFly,
+            initialFly = (currentConfig.subject as com.flylab.domain.model.Fly),
             initialEnvironment = currentConfig.initialEnvironment,
             seed = currentConfig.seed
         )
@@ -123,7 +123,7 @@ fun FlyLabRootScreen() {
                 },
                 actions = {
                     ProvenanceBadge(
-                        evidence = currentConfig.initialFly.evidence,
+                        evidence = (currentConfig.subject as com.flylab.domain.model.Fly).evidence,
                         modifier = Modifier.padding(end = 8.dp)
                     )
                 },

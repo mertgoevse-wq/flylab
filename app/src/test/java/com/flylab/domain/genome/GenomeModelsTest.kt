@@ -60,7 +60,7 @@ class GenomeModelsTest {
             appliedVariant = variant,
             pathwayEffects = emptyList(),
             predictedPhenotypes = listOf(
-                PhenotypePrediction("Eye color", "White eyes", ScientificEvidence(ProvenanceLevel.MODELED, notes="", confidence=0.8f))
+                PhenotypePrediction("Eye color", "White eyes", ScientificEvidence(ProvenanceLevel.MODELLED, notes="", confidence=0.8f))
             )
         )
 

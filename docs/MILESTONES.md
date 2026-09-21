@@ -84,3 +84,13 @@ Jeder Meilenstein hat klare Abnahmekriterien und ist klein genug, um in kurzen B
 ## M11+ – Langfristig
 
 Denk-Sandbox (nach Stufe 2, architektonisch vorbereitet) · männliche Tiere/Balz · Schwarm (20+) · Evolution · erweiterte Sinne · Lehre/Forschung · Peripherie · iOS.
+
+## M14 - Scientific Reproducibility & Foundation for Multi-Fly
+**Ziel:** Experiment-Abstraktion (Experimentmodell), verbesserte Graphen-Architektur, Zeitreihen-Logging, Herkunftsnachweis-Ausbau (Provenance).
+**Umfang:**
+- Kanonisches Experimentmodell (`Subject`, `ExperimentRun`, etc).
+- Provenance auf 11 Kategorien (MEASURED bis UNKNOWN) erweitert.
+- Reusable Graph-Abstraktionen (GraphNode, NeuronNode, etc).
+- Zeitreihen/Event-Logging mit deterministischen Seeds gefestigt zur Reproduzierbarkeit.
+**Abnahme:** Tests bestehen.
+**Abhängigkeiten:** M13.

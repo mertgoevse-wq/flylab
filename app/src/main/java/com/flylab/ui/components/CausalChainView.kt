@@ -82,7 +82,7 @@ fun CausalChainView(
                 subtitle = "Absteigende VNC-Neurone",
                 details = "Vorwärts: ${String.format("%.1f", snapshot.motorCommand.forwardVelocityMmS)} mm/s, Drehung: ${String.format("%.1f", Math.toDegrees(snapshot.motorCommand.angularVelocityRadS.toDouble()))} °/s.",
                 evidence = ScientificEvidence(
-                    level = ProvenanceLevel.MODELED,
+                    level = ProvenanceLevel.MODELLED,
                     citation = "Namiki et al. (2018) eLife",
                     notes = "Absteigende Kontrollbahnen zur Steuerung von Lauf- und Flugbewegungen."
                 ),

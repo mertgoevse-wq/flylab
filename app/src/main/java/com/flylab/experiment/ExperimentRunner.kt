@@ -11,13 +11,13 @@ class ExperimentRunner(
     val configuration: ExperimentConfiguration
 ) {
     val engine = SimulationEngine(
-        initialFly = configuration.initialFly,
+        initialFly = (configuration.subject as com.flylab.domain.model.Fly),
         initialEnvironment = configuration.initialEnvironment,
         seed = configuration.seed
     )
 
     private val recordedEvents = mutableListOf<ExperimentEvent>()
-    private var lastRecordedBehavior: BehaviorType = configuration.initialFly.behavioralState.activeBehavior
+    private var lastRecordedBehavior: BehaviorType = (configuration.subject as com.flylab.domain.model.Fly).behavioralState.activeBehavior
     private var lastOdorConcentrationReported: Float = 0.0f
     private var lastSucroseEncountered: Boolean = false
 

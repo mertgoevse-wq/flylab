@@ -47,12 +47,19 @@ fun ProvenanceBadge(
     var showDialog by remember { mutableStateOf(false) }
 
     val bgColor = when (evidence.level) {
+        ProvenanceLevel.OBSERVED -> Color(0xFF059669)
         ProvenanceLevel.MEASURED -> Color(0xFF059669)   // Emerald
         ProvenanceLevel.PUBLISHED -> Color(0xFF0284C7)  // Sky Blue
+        ProvenanceLevel.EXPERIMENTAL -> Color(0xFF0284C7)
+        ProvenanceLevel.CURATED -> Color(0xFF0284C7)
+        ProvenanceLevel.IMPORTED -> Color(0xFF6366F1)
         ProvenanceLevel.DERIVED -> Color(0xFF6366F1)    // Indigo
-        ProvenanceLevel.MODELED -> Color(0xFFD97706)    // Amber
+        ProvenanceLevel.MODELLED -> Color(0xFFD97706)    // Amber
         ProvenanceLevel.SIMULATED -> Color(0xFF0D9488)  // Teal
-        ProvenanceLevel.HYPOTHESIS -> Color(0xFFDC2626) // Red
+        ProvenanceLevel.INFERRED -> Color(0xFFD97706)
+        ProvenanceLevel.PREDICTED -> Color(0xFFD97706)
+        ProvenanceLevel.HYPOTHETICAL -> Color(0xFFDC2626) // Red
+        ProvenanceLevel.UNKNOWN -> Color(0xFF6B7280)    // Gray
     }
 
     Box(
@@ -141,12 +148,19 @@ fun ProvenanceDetailDialog(
                         // Einfache Erklärung
                         Text(
                             text = when (evidence.level) {
+                                ProvenanceLevel.OBSERVED -> "Dieser Wert wurde beobachtet, aber noch nicht quantifiziert."
                                 ProvenanceLevel.MEASURED -> "Dieser Wert wurde im echten Labor an einer echten Taufliege unter dem Elektronenmikroskop direkt gezählt."
                                 ProvenanceLevel.PUBLISHED -> "Dieser Mechanismus wurde von Wissenschaftlern in Fachartikeln untersucht und genau beschrieben."
+                                ProvenanceLevel.EXPERIMENTAL -> "Dieser Zusammenhang ist experimentell belegt."
+                                ProvenanceLevel.CURATED -> "Dieser Wert wurde aus der Fachliteratur kuratiert."
+                                ProvenanceLevel.IMPORTED -> "Dieser Wert stammt aus einem externen Datensatz."
                                 ProvenanceLevel.DERIVED -> "Dieser Wert wurde mathematisch aus echten Messungen des Fliegengehirns ausgerechnet."
-                                ProvenanceLevel.MODELED -> "Das ist ein vereinfachtes Computermodell, das sich an echten biologischen Prinzipien orientiert."
+                                ProvenanceLevel.MODELLED -> "Das ist ein vereinfachtes Computermodell, das sich an echten biologischen Prinzipien orientiert."
                                 ProvenanceLevel.SIMULATED -> "Dieser Wert wird dynamisch während des laufenden Simulationsflugs in Echtzeit berechnet."
-                                ProvenanceLevel.HYPOTHESIS -> "Das ist eine Annahme oder Vermutung, für die es noch keine sicheren Messdaten gibt."
+                                ProvenanceLevel.INFERRED -> "Dieser Wert ist logisch oder indirekt abgeleitet."
+                                ProvenanceLevel.PREDICTED -> "Dieser Wert wird durch ein Modell vorhergesagt."
+                                ProvenanceLevel.HYPOTHETICAL -> "Das ist eine Annahme oder Vermutung, für die es noch keine sicheren Messdaten gibt."
+                                ProvenanceLevel.UNKNOWN -> "Herkunft unbekannt."
                             },
                             style = MaterialTheme.typography.bodyMedium
                         )

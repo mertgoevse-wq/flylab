@@ -23,9 +23,16 @@ class ScientificProvenanceTest {
         assertTrue(canonicalNames.contains("MEASURED"))
         assertTrue(canonicalNames.contains("PUBLISHED"))
         assertTrue(canonicalNames.contains("DERIVED"))
-        assertTrue(canonicalNames.contains("MODELED"))
+        assertTrue(canonicalNames.contains("MODELLED"))
         assertTrue(canonicalNames.contains("SIMULATED"))
-        assertTrue(canonicalNames.contains("HYPOTHESIS"))
+        assertTrue(canonicalNames.contains("HYPOTHETICAL"))
+        assertTrue(canonicalNames.contains("OBSERVED"))
+        assertTrue(canonicalNames.contains("EXPERIMENTAL"))
+        assertTrue(canonicalNames.contains("CURATED"))
+        assertTrue(canonicalNames.contains("IMPORTED"))
+        assertTrue(canonicalNames.contains("INFERRED"))
+        assertTrue(canonicalNames.contains("PREDICTED"))
+        assertTrue(canonicalNames.contains("UNKNOWN"))
     }
 
     @Test
@@ -40,11 +47,11 @@ class ScientificProvenanceTest {
     @Test
     fun `no simplified or modeled connection is classified as MEASURED`() {
         val kcClawEvidence = ScientificEvidence.KENYON_CELL_SPARSE_MODEL
-        assertEquals(ProvenanceLevel.MODELED, kcClawEvidence.level)
+        assertEquals(ProvenanceLevel.MODELLED, kcClawEvidence.level)
         assertFalse("Modeled KC claw connections cannot claim to be empirically measured", kcClawEvidence.isEmpiricallyVerified())
 
         val premotorEvidence = ScientificEvidence.PREMOTOR_STEERING_MODEL
-        assertEquals(ProvenanceLevel.MODELED, premotorEvidence.level)
+        assertEquals(ProvenanceLevel.MODELLED, premotorEvidence.level)
         assertFalse(premotorEvidence.isEmpiricallyVerified())
     }
 

@@ -13,71 +13,19 @@ enum class ProvenanceLevel(
     val description: String,
     val isEmpiricallyVerified: Boolean
 ) {
-    /**
-     * Directly measured in laboratory experiments on Drosophila melanogaster.
-     * Example: FlyWire full female connectome synaptic count or reconstructed morphology.
-     */
-    MEASURED(
-        canonicalName = "MEASURED",
-        germanName = "BELEGT (Gemessen)",
-        description = "Experimentell direkt am adulten Drosophila-Präparat gemessen.",
-        isEmpiricallyVerified = true
-    ),
-
-    /**
-     * Published in peer-reviewed scientific literature with verifiable DOI/citations.
-     * Example: Kenyon cell odor response sparseness in mushroom body (Turner et al. 2008).
-     */
-    PUBLISHED(
-        canonicalName = "PUBLISHED",
-        germanName = "BELEGT (Literatur)",
-        description = "In begutachteter Fachliteratur publiziert und repliziert.",
-        isEmpiricallyVerified = true
-    ),
-
-    /**
-     * Analytically or computationally derived from measured/published datasets.
-     * Example: Synaptic projection density or pathway summaries calculated from connectome graphs.
-     */
-    DERIVED(
-        canonicalName = "DERIVED",
-        germanName = "ABGELEITET",
-        description = "Aus Messdaten mathematisch oder graphentheoretisch berechnet.",
-        isEmpiricallyVerified = true
-    ),
-
-    /**
-     * Simplified mathematical or computational model inspired by biological principles.
-     * Example: 16-neuron Kenyon cell representation, rate-based sigmoid activation.
-     */
-    MODELED(
-        canonicalName = "MODELED",
-        germanName = "MODELLIERT",
-        description = "Vereinfachtes Rechenmodell, von biologischen Prinzipien inspiriert.",
-        isEmpiricallyVerified = false
-    ),
-
-    /**
-     * Dynamically generated during a live simulation run (e.g. dynamic synaptic weights,
-     * transient firing rates, instantaneous sensory gradients, live motor commands).
-     */
-    SIMULATED(
-        canonicalName = "SIMULATED",
-        germanName = "SIMULIERT",
-        description = "Dynamisch im Simulationslauf berechneter Zustand oder transientes Signal.",
-        isEmpiricallyVerified = false
-    ),
-
-    /**
-     * Unverified scientific hypothesis or parameter without empirical support.
-     * Example: Novel uncharacterized odor receptor mutations, synthetic pharmacology.
-     */
-    HYPOTHESIS(
-        canonicalName = "HYPOTHESIS",
-        germanName = "HYPOTHETISCH",
-        description = "Wissenschaftliche Annahme oder offene Frage ohne belastbare Messdaten.",
-        isEmpiricallyVerified = false
-    );
+    OBSERVED("OBSERVED", "BEOBACHTET", "Beobachtet, aber nicht quantifiziert", true),
+    MEASURED("MEASURED", "GEMESSEN", "Experimentell gemessen", true),
+    PUBLISHED("PUBLISHED", "PUBLIZIERT", "In Fachliteratur publiziert", true),
+    EXPERIMENTAL("EXPERIMENTAL", "EXPERIMENTELL", "Experimentell belegt", true),
+    CURATED("CURATED", "KURATIERT", "Kuratiert aus Literatur", true),
+    IMPORTED("IMPORTED", "IMPORTIERT", "Aus externem Datensatz importiert", true),
+    DERIVED("DERIVED", "ABGELEITET", "Aus Messdaten mathematisch berechnet", true),
+    MODELLED("MODELLED", "MODELLIERT", "Berechnetes Modell", false),
+    SIMULATED("SIMULATED", "SIMULIERT", "Während der Simulation berechnet", false),
+    INFERRED("INFERRED", "GESCHLUSSFOLGERT", "Logisch oder indirekt abgeleitet", false),
+    PREDICTED("PREDICTED", "VORHERGESAGT", "Vorhergesagt durch Modell", false),
+    HYPOTHETICAL("HYPOTHETICAL", "HYPOTHETISCH", "Wissenschaftliche Annahme ohne Daten", false),
+    UNKNOWN("UNKNOWN", "UNBEKANNT", "Herkunft unbekannt", false);
 
     companion object {
         fun fromString(value: String): ProvenanceLevel {
@@ -85,7 +33,7 @@ enum class ProvenanceLevel(
                 it.name.equals(value, ignoreCase = true) ||
                 it.canonicalName.equals(value, ignoreCase = true) ||
                 it.germanName.contains(value, ignoreCase = true)
-            } ?: MODELED
+            } ?: UNKNOWN
         }
     }
 }
@@ -149,7 +97,7 @@ data class ScientificEvidence(
         )
 
         val KENYON_CELL_SPARSE_MODEL = ScientificEvidence(
-            level = ProvenanceLevel.MODELED,
+            level = ProvenanceLevel.MODELLED,
             citation = "Caron et al., Nature 2013; Li et al., eLife 2020",
             doi = "10.1038/nature12063",
             datasetSource = "FlyLab Mushroom Body Computational Model",
@@ -159,7 +107,7 @@ data class ScientificEvidence(
         )
 
         val PREMOTOR_STEERING_MODEL = ScientificEvidence(
-            level = ProvenanceLevel.MODELED,
+            level = ProvenanceLevel.MODELLED,
             citation = "Rayshubskiy et al., bioRxiv 2020; Hulse et al., eLife 2021",
             datasetSource = "FlyLab Premotor Steering Model",
             datasetVersion = "1.0",
@@ -168,7 +116,7 @@ data class ScientificEvidence(
         )
 
         val DOPAMINE_PLASTICITY_MATH_MODEL = ScientificEvidence(
-            level = ProvenanceLevel.MODELED,
+            level = ProvenanceLevel.MODELLED,
             citation = "Aso et al., eLife 2014; Hige et al., Nature 2015; Handler et al., Cell 2019",
             doi = "10.7554/eLife.04577",
             datasetSource = "FlyLab 3-Factor Plasticity Rule",
@@ -178,7 +126,7 @@ data class ScientificEvidence(
         )
 
         val SENSORY_TRANSDUCTION_MODEL = ScientificEvidence(
-            level = ProvenanceLevel.MODELED,
+            level = ProvenanceLevel.MODELLED,
             citation = "Benton et al., Cell 2009; Steck et al., eLife 2012",
             datasetSource = "FlyLab Chemotaxis Model",
             datasetVersion = "1.0",
@@ -194,14 +142,14 @@ data class ScientificEvidence(
         )
 
         val RATE_BASED_SIMULATION_MODEL = ScientificEvidence(
-            level = ProvenanceLevel.MODELED,
+            level = ProvenanceLevel.MODELLED,
             citation = "FlyLab Neural Dynamics Core v1.0",
             notes = "Abstract population rate dynamics with sigmoid activation and membrane leak time constant.",
             confidence = 0.70f
         )
 
         val HYPOTHETICAL_PERTURBATION = ScientificEvidence(
-            level = ProvenanceLevel.HYPOTHESIS,
+            level = ProvenanceLevel.HYPOTHETICAL,
             notes = "User-configured experimental perturbation without empirical calibration.",
             confidence = 0.30f
         )

@@ -31,7 +31,7 @@ class DefaultDevelopmentEngine(
             randomSeed = seed,
             genomeSnapshot = context.genome.sequenceSnapshot.take(50), // Snapshot
             evidence = ScientificEvidence(
-                level = ProvenanceLevel.MODELED,
+                level = ProvenanceLevel.MODELLED,
                 notes = "Synthetic embryonic development driven by $modelVersion via random seed $seed.",
                 confidence = 0.8f
             )
@@ -70,7 +70,7 @@ class DefaultDevelopmentEngine(
         val wingShape = if (context.genome.dominantAlleles.contains("dpp-")) "vestigial" else "wild-type"
         val eyeColor = if (context.genome.dominantAlleles.contains("w-")) "white" else "red"
 
-        val ev = ScientificEvidence(level = ProvenanceLevel.MODELED, notes = "Synthetic organ generated during development.", confidence = 0.8f)
+        val ev = ScientificEvidence(level = ProvenanceLevel.MODELLED, notes = "Synthetic organ generated during development.", confidence = 0.8f)
         val organs = listOf(
             Organ("org_digestive_1", "Midgut", OrganSystemType.DIGESTIVE, AnatomicalRegion.ABDOMEN, PhysiologicalState(), ev),
             Organ("org_resp_1", "Tracheal Tubes", OrganSystemType.RESPIRATORY, AnatomicalRegion.THORAX, PhysiologicalState(), ev),

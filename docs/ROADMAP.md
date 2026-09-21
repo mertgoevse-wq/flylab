@@ -38,3 +38,10 @@ Denk-Sandbox (virtuelle, abgeschottete Computerwelt; Kernbestandteil, aber nach 
 - Phase 14: Wissenschaftliche Validierung/Reproduzierbarkeit → kontinuierlich ab Stufe 1 (Determinismus, Tests), vertieft Stufe 4
 
 **Hinweis zur Konsistenz:** Die Stufen sind die verbindliche Reihenfolge; die Phasen sind die Fach-Gliederung. Bei Abhängigkeitskonflikten entscheidet TASK_GRAPH.md konkret pro Aufgabe.
+
+### M14 - Scientific Reproducibility Foundation
+Vorbereitung auf P2 Scale (Multi-Fly, Swarm, Graphen).
+- Einheitliches Experiment-Abstraktionsmodell (Determinismus, Seeds).
+- Strikte Provenienz (Observed bis Hypothetical).
+- Graph-Abstraktionen (Nodes/Edges für Neuro-Modelle).
+- Zeitreihen- und Event-Logging (ExperimentJournal).

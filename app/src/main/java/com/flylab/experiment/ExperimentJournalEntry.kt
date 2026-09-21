@@ -80,7 +80,7 @@ data class ExperimentJournalEntry(
     val outcomeSummary: String,
     val userNotes: String = "",
     override val evidence: ScientificEvidence = ScientificEvidence(
-        level = ProvenanceLevel.MODELED,
+        level = ProvenanceLevel.MODELLED,
         citation = "FlyLab Experiment Journal Engine",
         notes = "Empirical in-silico simulation journal entry with verifiable causal chains."
     )

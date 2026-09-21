@@ -41,25 +41,27 @@ enum class ExperimentType(
  * Full configuration needed to start and reproduce an experiment deterministically.
  */
 data class ExperimentConfiguration(
-    val id: String,
+    override val id: String,
     val type: ExperimentType,
-    val title: String,
+    override val title: String,
     val researchQuestion: String,
-    val hypothesis: String = "",
-    val seed: Long = 42L,
-    val initialFly: Fly = Fly(),
+    override val hypothesis: String = "",
+    override val seed: Long = 42L,
+    val subject: com.flylab.domain.model.Subject = com.flylab.domain.model.Fly(),
     val initialEnvironment: Environment = Environment(),
     val regionPerturbations: Map<NeuropilId, Float> = emptyMap(),
     val durationSeconds: Float = 10.0f,
     val dtSeconds: Float = 0.05f,
-    val datasetVersion: String = "FlyWire v783-slice1",
-    val modelVersion: String = "FlyLab SimCore v1.0",
+    override val datasetVersion: String = "FlyWire v783-slice1",
+    override val modelVersion: String = "FlyLab SimCore v1.0",
     override val evidence: ScientificEvidence = ScientificEvidence(
-        level = ProvenanceLevel.MODELED,
+        level = ProvenanceLevel.MODELLED,
         citation = "FlyLab Experiment Protocol Specification",
         notes = "Standardized in-silico Drosophila behavioral assay protocol."
     )
-) : ProvenanceTagged {
+) : Experiment {
+    override val subjects: List<com.flylab.domain.model.Subject> get() = listOf(subject)
+    override val environment: Environment get() = initialEnvironment
 
     companion object {
         /**
@@ -133,7 +135,7 @@ data class ExperimentConfiguration(
                 hypothesis = "Ohne intakte Glomerulus-Übertragung bricht das Orientierungsverhalten zusammen.",
                 regionPerturbations = mapOf(NeuropilId.ANTENNAL_LOBE to 0.2f),
                 evidence = ScientificEvidence(
-                    level = ProvenanceLevel.MODELED,
+                    level = ProvenanceLevel.MODELLED,
                     notes = "Simulationseingriff: gezielte künstliche Dämpfung neuronaler Übertragung."
                 )
             )

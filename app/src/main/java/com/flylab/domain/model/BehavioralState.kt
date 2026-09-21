@@ -88,7 +88,7 @@ data class PhysiologicalNeeds(
     val fatigue: Float = 0.2f,  // [0.0 (fresh) .. 1.0 (exhausted)]
     val arousal: Float = 0.3f,  // [0.0 (calm/sleeping) .. 1.0 (hyperactive/alarmed)]
     override val evidence: ScientificEvidence = ScientificEvidence(
-        level = ProvenanceLevel.MODELED,
+        level = ProvenanceLevel.MODELLED,
         citation = "FlyLab Motivational Drive Model",
         notes = "Continuous motivational variables regulating behavioral threshold selection."
     )

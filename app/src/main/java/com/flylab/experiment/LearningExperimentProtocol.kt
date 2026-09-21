@@ -35,7 +35,7 @@ class LearningExperimentProtocol(
             id = baseConfiguration.id + "_extinction",
             title = "${baseConfiguration.title} - Löschung/Test",
             initialEnvironment = extinctionEnv,
-            initialFly = conditionedFly,         // Carry over state
+            subject = conditionedFly,         // Carry over state
             durationSeconds = 15.0f
         )
         val extinctionRunner = ExperimentRunner(extinctionConfig)

@@ -42,7 +42,7 @@ data class Provenance(
     val randomSeed: Long,
     val genomeSnapshot: String, // Simplified subset or hash of the initiating genome
     override val evidence: ScientificEvidence = ScientificEvidence(
-        level = ProvenanceLevel.MODELED,
+        level = ProvenanceLevel.MODELLED,
         notes = "Rule-based simulated development from synthetic developmental framework.",
         confidence = 0.8f
     )

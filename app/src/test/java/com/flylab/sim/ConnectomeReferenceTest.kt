@@ -71,7 +71,7 @@ class ConnectomeReferenceTest {
 
         for (kc in kcNeurons) {
             assertTrue("Kenyon cell #$kc must be marked as representative model", kc.isRepresentativeModel)
-            assertEquals("Kenyon cell #$kc evidence must be MODELED", ProvenanceLevel.MODELED, kc.provenanceLevel)
+            assertEquals("Kenyon cell #$kc evidence must be MODELED", ProvenanceLevel.MODELLED, kc.provenanceLevel)
             assertFalse("Modeled KCs must not claim empirical verification", kc.evidence.level.isEmpiricallyVerified)
         }
 
@@ -79,7 +79,7 @@ class ConnectomeReferenceTest {
         val pnKcSynapses = ConnectomeReference.SYNAPSES.filter { it.preNeuronId.startsWith("PN_") && it.postNeuronId.startsWith("KC_") }
         assertTrue(pnKcSynapses.isNotEmpty())
         for (syn in pnKcSynapses) {
-            assertEquals("PN->KC claw synapse must be classified as MODELED", ProvenanceLevel.MODELED, syn.provenanceLevel)
+            assertEquals("PN->KC claw synapse must be classified as MODELED", ProvenanceLevel.MODELLED, syn.provenanceLevel)
             assertFalse(syn.evidence.level.isEmpiricallyVerified)
         }
     }
@@ -101,7 +101,7 @@ class ConnectomeReferenceTest {
         assertEquals(32, plasticSynapses.size) // 16 KCs * 2 MBONs
 
         for (syn in plasticSynapses) {
-            assertEquals(ProvenanceLevel.MODELED, syn.provenanceLevel)
+            assertEquals(ProvenanceLevel.MODELLED, syn.provenanceLevel)
             assertEquals(1.0f, syn.baselineWeight, 0.001f)
         }
     }

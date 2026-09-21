@@ -15,7 +15,7 @@ enum class BiologicalSex(
         germanName = "Männlich (Parametrisiertes Modell)",
         description = "Männliches Gehirn existiert als Modell mit belegten dimorphen Unterschieden (z.B. Fru-Neurone, P1-Cluster), kein erfundenes Voll-Konnektom.",
         connectomeProvenance = ScientificEvidence(
-            level = ProvenanceLevel.MODELED,
+            level = ProvenanceLevel.MODELLED,
             citation = "Cachero et al. (2010) Curr Biol; Auer & Benton (2016) Curr Opin Neurobiol.",
             notes = "Male-specific circuits modeled as param-adjusted dimorphic overlays on reference baseline."
         )
@@ -26,10 +26,10 @@ enum class BiologicalSex(
  * Complete Fly organism state.
  */
 data class Fly(
-    val id: String = "fly_canton_s_01",
+    override val id: String = "fly_canton_s_01",
     val name: String = "Canton-S Wildtyp (Weiblich)",
     val sex: BiologicalSex = BiologicalSex.FEMALE,
-    val genotype: String = "w1118; +/+",
+    override val genotype: String = "w1118; +/+",
     val anatomy: FlyAnatomy = FlyAnatomy(),
     val behavioralState: BehavioralState = BehavioralState(),
     val neuromodulators: Map<NeuromodulatorType, NeuromodulatorState> = NeuromodulatorType.entries.associateWith {
@@ -40,7 +40,8 @@ data class Fly(
         citation = "FlyBase Consortium (2024); Dorkenwald et al. (2024)",
         notes = "Standard laboratory wild-type Drosophila melanogaster female specimen."
     )
-) : ProvenanceTagged {
+) : Subject {
+    override val species: String = "Drosophila melanogaster"
     init {
         // Enforce biological integrity rules
         if (sex == BiologicalSex.MALE) {
