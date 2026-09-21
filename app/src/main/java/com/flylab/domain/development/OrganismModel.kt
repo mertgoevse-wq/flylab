@@ -1,6 +1,7 @@
 package com.flylab.domain.development
 
 import java.util.UUID
+import com.flylab.domain.model.Organ
 
 data class Organism(
     val id: UUID = UUID.randomUUID(),
@@ -24,7 +25,8 @@ data class DevelopmentalStage(
 data class DevelopmentalAnatomy(
     val sizeMillimeters: Float,
     val weightMilligrams: Float,
-    val traits: Map<String, String> // Phenotypic expressions (e.g. eyeColor = red)
+    val traits: Map<String, String>, // Phenotypic expressions (e.g. eyeColor = red)
+    val organs: List<Organ> = emptyList()
 )
 
 data class NeuralStructure(

@@ -127,6 +127,14 @@ fun Viewport3DCanvas(
             }
 
             // 2. Render 3D Brain Neuropil Regions
+            if (renderLayers.showInternalOrgans) {
+                val abdomenCenter = camera.project(Vector3D(0f, -0.2f, -1.0f), width, height)
+                if (abdomenCenter.isVisible) {
+                    val scale = 3.0f / maxOf(0.1f, abdomenCenter.depthZ)
+                    drawCircle(color = Color(0xFFC0CA33).copy(alpha=0.6f), radius = 30f * scale, center = Offset(abdomenCenter.screenX, abdomenCenter.screenY))
+                    drawCircle(color = Color(0xFFE53935).copy(alpha=0.6f), radius = 15f * scale, center = Offset(abdomenCenter.screenX, abdomenCenter.screenY - 10f * scale))
+                }
+            }
             if (renderLayers.showBrainRegions) {
                 for (marker in brainNeuropils) {
                     val pCenter = camera.project(marker.center, width, height)
@@ -222,6 +230,12 @@ fun Viewport3DCanvas(
                 selected = renderLayers.showExoskeleton,
                 onClick = { onLayerChanged(renderLayers.copy(showExoskeleton = !renderLayers.showExoskeleton)) },
                 label = { Text("Körper", fontSize = 11.sp) }
+            )
+            FilterChip(
+                selected = renderLayers.showInternalOrgans,
+                onClick = { onLayerChanged(renderLayers.copy(showInternalOrgans = !renderLayers.showInternalOrgans)) },
+                label = { Text("Organe", fontSize = 11.sp) },
+                modifier = Modifier.padding(start = 4.dp)
             )
             FilterChip(
                 selected = renderLayers.showBrainRegions,

@@ -2,6 +2,10 @@ package com.flylab.domain.development
 
 import com.flylab.domain.model.ProvenanceLevel
 import com.flylab.domain.model.ScientificEvidence
+import com.flylab.domain.model.Organ
+import com.flylab.domain.model.OrganSystemType
+import com.flylab.domain.model.AnatomicalRegion
+import com.flylab.domain.model.PhysiologicalState
 import java.util.Random
 
 interface OrganismDevelopmentEngine {
@@ -63,14 +67,23 @@ class DefaultDevelopmentEngine(
         var finalSize = context.priors.baseSize * sizeVar
         if (finalSize > context.constraints.maxSize) finalSize = context.constraints.maxSize
 
-        // Very simplified trait generation: mapping genome to morphology
         val wingShape = if (context.genome.dominantAlleles.contains("dpp-")) "vestigial" else "wild-type"
         val eyeColor = if (context.genome.dominantAlleles.contains("w-")) "white" else "red"
+
+        val ev = ScientificEvidence(level = ProvenanceLevel.MODELED, notes = "Synthetic organ generated during development.", confidence = 0.8f)
+        val organs = listOf(
+            Organ("org_digestive_1", "Midgut", OrganSystemType.DIGESTIVE, AnatomicalRegion.ABDOMEN, PhysiologicalState(), ev),
+            Organ("org_resp_1", "Tracheal Tubes", OrganSystemType.RESPIRATORY, AnatomicalRegion.THORAX, PhysiologicalState(), ev),
+            Organ("org_circ_1", "Dorsal Vessel (Heart)", OrganSystemType.CIRCULATORY, AnatomicalRegion.ABDOMEN, PhysiologicalState(), ev),
+            Organ("org_repro_1", "Ovaries", OrganSystemType.REPRODUCTIVE, AnatomicalRegion.ABDOMEN, PhysiologicalState(), ev),
+            Organ("org_nervous_1", "Ventral Nerve Cord", OrganSystemType.NERVOUS, AnatomicalRegion.THORAX, PhysiologicalState(), ev)
+        )
 
         return DevelopmentalAnatomy(
             sizeMillimeters = finalSize,
             weightMilligrams = finalSize * 1.5f,
-            traits = mapOf("wingShape" to wingShape, "eyeColor" to eyeColor)
+            traits = mapOf("wingShape" to wingShape, "eyeColor" to eyeColor),
+            organs = organs
         )
     }
 

@@ -99,6 +99,7 @@ data class FlyAnatomy(
     val bodyLengthMm: Float = 2.5f,
     val wingSpanMm: Float = 5.0f,
     val activeRegions: Set<AnatomicalRegion> = AnatomicalRegion.entries.toSet(),
+    val organs: List<Organ> = emptyList(),
     override val evidence: ScientificEvidence = ScientificEvidence(
         level = ProvenanceLevel.MEASURED,
         citation = "Markow & O'Grady (2005). Drosophila: A Guide to Species Identification and Use.",

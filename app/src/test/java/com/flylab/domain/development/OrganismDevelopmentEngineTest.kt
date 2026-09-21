@@ -53,4 +53,10 @@ class OrganismDevelopmentEngineTest {
         assertEquals("white", organism.anatomy.traits["eyeColor"])
         assertEquals("wild-type", organism.anatomy.traits["wingShape"])
     }
+
+    @Test
+    fun organsAreGeneratedAndCategorizedBySystem() {
+        val organism = engine.develop(context, seed = 42L)
+        assertEquals(5, organism.anatomy.organs.size)
+    }
 }
