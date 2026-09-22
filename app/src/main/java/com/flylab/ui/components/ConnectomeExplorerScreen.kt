@@ -161,7 +161,12 @@ fun NeuronDetailPanel(
         
         Spacer(modifier = Modifier.height(16.dp))
         
-        Card(modifier = Modifier.fillMaxWidth()) {
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+            shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)
+        ) {
             Column(modifier = Modifier.padding(12.dp)) {
                 Text("Realtime Activity: ${(rate * 100).toInt()}%", fontWeight = FontWeight.Bold)
                 LinearProgressIndicator(

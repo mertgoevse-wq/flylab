@@ -234,7 +234,7 @@ fun ProvenanceDetailDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = onDismiss, shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)) {
                 Text("Schließen")
             }
         }

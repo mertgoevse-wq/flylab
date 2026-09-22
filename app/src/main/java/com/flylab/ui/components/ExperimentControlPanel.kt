@@ -63,7 +63,7 @@ fun ExperimentControlPanel(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             // Row 1: Protocol Dropdown & Journal Button
@@ -165,19 +165,19 @@ fun ExperimentControlPanel(
 
                     Spacer(modifier = Modifier.width(4.dp))
 
-                    OutlinedButton(onClick = onStepBackward, enabled = !isPlaying && currentStep > 0) {
+                    OutlinedButton(onClick = onStepBackward, enabled = !isPlaying && currentStep > 0, shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)) {
                         Text("-1", fontSize = 11.sp)
                     }
 
                     Spacer(modifier = Modifier.width(4.dp))
 
-                    OutlinedButton(onClick = onStepForward, enabled = !isPlaying) {
+                    OutlinedButton(onClick = onStepForward, enabled = !isPlaying, shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)) {
                         Text("+1", fontSize = 11.sp)
                     }
 
                     Spacer(modifier = Modifier.width(4.dp))
 
-                    OutlinedButton(onClick = onReset) {
+                    OutlinedButton(onClick = onReset, shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)) {
                         Text("Reset", fontSize = 11.sp)
                     }
                 }

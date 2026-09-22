@@ -3,6 +3,7 @@ package com.flylab.ui.components
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -64,6 +65,12 @@ fun Viewport3DCanvas(
     Box(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = { offset -> /* Select / Tap */ },
+                    onLongPress = { offset -> /* Inspect */ }
+                )
+            }
             .pointerInput(Unit) {
                 detectTransformGestures { _, pan, zoom, _ ->
                     // 1-finger / drag rotates azimuth and elevation

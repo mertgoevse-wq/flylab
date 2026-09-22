@@ -182,6 +182,9 @@ fun FlyLabRootScreen() {
                     )
                 }
 
+                // Diagnostics
+                com.flylab.ui.components.DiagnosticsDashboard(snapshot = engine.diagnostics.getSnapshot(1), modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
+
                 // 2. Brain Region Inspector (Neuropil activation & live perturbation)
                 BrainRegionInspector(
                     regionStates = currentSnapshot.regionStates,

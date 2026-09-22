@@ -8,6 +8,11 @@ import com.flylab.domain.model.MotorCommand
 import com.flylab.domain.model.NeuromodulatorType
 import com.flylab.domain.model.NeuropilId
 import com.flylab.domain.model.SynapseSimulationOverlay
+import com.flylab.sim.backend.SimulationComputeBackend
+import com.flylab.sim.backend.BackendType
+import com.flylab.sim.behavior.BehaviorRuntime
+import com.flylab.sim.behavior.MechanisticBehaviorRuntime
+import com.flylab.sim.diagnostics.PerformanceDiagnostics
 import java.util.Random
 
 /**
@@ -15,8 +20,7 @@ import java.util.Random
  *
  * ARCHITECTURAL INTEGRITY (CLAUDE.md & SIMULATION_MODEL.md):
  * - Decoupled completely from rendering and Android UI contexts.
- * - Deterministic: Same initial state + same seed = identical trajectory.
- * - Full time-travel capability (snapshots recorded for replay, scrub, branch).
+ * - Uses BehaviorRuntime abstraction.
  */
 class SimulationEngine(
     val initialFly: Fly = Fly(),
@@ -37,75 +41,53 @@ class SimulationEngine(
 
     var currentEnvironment: Environment = initialEnvironment
         private set
-
-    var currentFiringRates: Map<String, Float> = ConnectomeReference.NEURONS.associate { it.id to 0.05f }
-        private set
-
-    var currentRegionStates: Map<NeuropilId, BrainRegionState> = emptyMap()
-        private set
-
-    var currentSynapticOverlays: Map<String, SynapseSimulationOverlay> = emptyMap()
-        private set
-
+        
     var currentSensoryInput = SensoryTransduction.transduce(currentFly, currentEnvironment)
         private set
 
     var currentMotorCommand = MotorCommand.IDLE
         private set
+        
+    val diagnostics = PerformanceDiagnostics()
 
-    var currentBehavior: BehaviorType = BehaviorType.EXPLORING
-        private set
+    // Default to the mechanistic behavior runtime
+    private val behaviorRuntime = MechanisticBehaviorRuntime()
 
-    // Experimental optogenetic/pharmacological perturbations per brain region (1.0 = normal, 0.0 = silenced)
-    val regionPerturbations = mutableMapOf<NeuropilId, Float>()
-    val neuronPerturbations = mutableMapOf<String, Float>()
+    // For backwards compatibility and UI bindings
+    val currentFiringRates: Map<String, Float> get() = behaviorRuntime.currentFiringRates
+    val currentRegionStates: Map<NeuropilId, BrainRegionState> get() = behaviorRuntime.currentRegionStates
+    val currentSynapticOverlays: Map<String, SynapseSimulationOverlay> get() = behaviorRuntime.currentSynapticOverlays
+    val currentBehavior: BehaviorType get() = behaviorRuntime.currentBehavior
+    val regionPerturbations get() = behaviorRuntime.regionPerturbations
+    val neuronPerturbations get() = behaviorRuntime.neuronPerturbations
 
-    // Ring-buffer/List of historical snapshots for deterministic time-travel
     private val _history = mutableListOf<SimulationSnapshot>()
     val history: List<SimulationSnapshot> get() = _history
 
     init {
+        behaviorRuntime.initialize()
         recordSnapshot()
     }
 
-    /**
-     * Advances the simulation by dtSeconds.
-     */
     fun step(dtSeconds: Float = 0.05f): SimulationSnapshot {
+        diagnostics.startTick()
         currentStep++
         currentTimeSeconds += dtSeconds
 
-        // 1. Sensory Transduction: Sample environment at antennae and proboscis
+        // 1. Sensory
         currentSensoryInput = SensoryTransduction.transduce(currentFly, currentEnvironment)
 
-        // 2. Neural Dynamics: Rate-based integration across connectome subset
-        val dynamicsResult = NeuralDynamics.step(
-            previousRates = currentFiringRates,
-            synapticOverlays = currentSynapticOverlays,
-            sensoryInput = currentSensoryInput,
-            regionPerturbations = regionPerturbations,
-            neuronPerturbations = neuronPerturbations,
-            dtSeconds = dtSeconds
-        )
-        currentFiringRates = dynamicsResult.firingRates
-        currentRegionStates = dynamicsResult.regionStates
+        // 2. Behavior Runtime Inference
+        diagnostics.startInference()
+        val decision = behaviorRuntime.evaluate(currentSensoryInput, currentFly, dtSeconds)
+        diagnostics.endInference()
+        
+        currentMotorCommand = decision.command
 
-        // 3. Neuromodulation & Plasticity Update
-        val danPam = currentFiringRates["DAN_PAM"] ?: 0.0f
-        val danPpl1 = currentFiringRates["DAN_PPL1"] ?: 0.0f
-
-        currentSynapticOverlays = PlasticityRule.updatePlasticSynapses(
-            currentOverlays = currentSynapticOverlays,
-            synapticReferences = ConnectomeReference.SYNAPSES,
-            firingRates = currentFiringRates,
-            danPamRate = danPam,
-            danPpl1Rate = danPpl1,
-            dtSeconds = dtSeconds,
-            currentStep = currentStep,
-            timestampMs = (currentTimeSeconds * 1000).toLong()
-        )
-
-        // Update fly neuromodulator concentrations
+        // 3. Update fly states (Neuromodulators, Kinematics)
+        val danPam = decision.internalStateUpdates["danPam"] as? Float ?: 0f
+        val danPpl1 = decision.internalStateUpdates["danPpl1"] as? Float ?: 0f
+        
         val updatedNeuromodulators = currentFly.neuromodulators.mapValues { (type, state) ->
             val stepState = state.stepDecay(dtSeconds)
             when (type) {
@@ -115,18 +97,6 @@ class SimulationEngine(
             }
         }
 
-        // 4. Motor Mapping
-        val noise = (random.nextFloat() - 0.5f) * 0.4f
-        val motorDecision = MotorMapping.map(
-            firingRates = currentFiringRates,
-            sensoryInput = currentSensoryInput,
-            behavioralState = currentFly.behavioralState,
-            randomNoise = noise
-        )
-        currentMotorCommand = motorDecision.command
-        currentBehavior = motorDecision.behaviorType
-
-        // 5. Kinematics & Spatial Position Update
         val updatedBehavioralState = currentFly.behavioralState
             .copy(activeBehavior = currentBehavior)
             .updateSpatial(
@@ -141,21 +111,16 @@ class SimulationEngine(
         )
 
         val snapshot = recordSnapshot()
+        diagnostics.endTick()
         return snapshot
     }
 
-    /**
-     * Rewinds or seeks to an exact previous step in history.
-     */
     fun seekToStep(targetStep: Long): Boolean {
         val snapshot = _history.find { it.step == targetStep } ?: return false
         restoreSnapshot(snapshot)
         return true
     }
 
-    /**
-     * Restores complete internal state from a snapshot.
-     */
     fun restoreSnapshot(snapshot: SimulationSnapshot) {
         currentStep = snapshot.step
         currentTimeSeconds = snapshot.timeSeconds
@@ -163,55 +128,44 @@ class SimulationEngine(
         currentEnvironment = snapshot.environment
         currentSensoryInput = snapshot.sensoryInput
         currentMotorCommand = snapshot.motorCommand
-        currentFiringRates = snapshot.firingRates
-        currentRegionStates = snapshot.regionStates
-        currentSynapticOverlays = snapshot.synapticOverlays
-        neuronPerturbations.clear()
-        neuronPerturbations.putAll(snapshot.neuronPerturbations)
-        currentBehavior = snapshot.activeBehavior
+        
+        behaviorRuntime.overrideState(
+            firingRates = snapshot.firingRates,
+            synapses = snapshot.synapticOverlays,
+            regionPerturbs = snapshot.regionPerturbations,
+            neuronPerturbs = snapshot.neuronPerturbations,
+            behavior = snapshot.activeBehavior
+        )
 
-        // Re-align PRNG seed deterministically
         random = Random(snapshot.seed + snapshot.step * 31L)
     }
 
-    /**
-     * Resets the simulation to the initial starting condition.
-     */
     fun reset() {
         random = Random(seed)
         currentStep = 0L
         currentTimeSeconds = 0.0f
         currentFly = initialFly
         currentEnvironment = initialEnvironment
-        currentFiringRates = ConnectomeReference.NEURONS.associate { it.id to 0.05f }
-        currentRegionStates = emptyMap()
-        currentSynapticOverlays = emptyMap()
         currentSensoryInput = SensoryTransduction.transduce(currentFly, currentEnvironment)
         currentMotorCommand = MotorCommand.IDLE
-        currentBehavior = BehaviorType.EXPLORING
-        regionPerturbations.clear()
-        neuronPerturbations.clear()
+        behaviorRuntime.initialize()
         _history.clear()
         recordSnapshot()
     }
 
-    /**
-     * Perturbs (silences or excites) a specific brain region.
-     */
-    
     fun setNeuronPerturbation(neuronId: String, factor: Float) {
         if (factor == 1.0f) {
-            neuronPerturbations.remove(neuronId)
+            behaviorRuntime.neuronPerturbations.remove(neuronId)
         } else {
-            neuronPerturbations[neuronId] = factor.coerceIn(0.0f, 3.0f)
+            behaviorRuntime.neuronPerturbations[neuronId] = factor.coerceIn(0.0f, 3.0f)
         }
     }
 
     fun setRegionPerturbation(region: NeuropilId, factor: Float) {
         if (factor == 1.0f) {
-            regionPerturbations.remove(region)
+            behaviorRuntime.regionPerturbations.remove(region)
         } else {
-            regionPerturbations[region] = factor.coerceIn(0.0f, 3.0f)
+            behaviorRuntime.regionPerturbations[region] = factor.coerceIn(0.0f, 3.0f)
         }
     }
 
@@ -223,12 +177,13 @@ class SimulationEngine(
             environment = currentEnvironment,
             sensoryInput = currentSensoryInput,
             motorCommand = currentMotorCommand,
-            firingRates = currentFiringRates,
-            regionStates = currentRegionStates,
-            synapticOverlays = currentSynapticOverlays,
-            neuronPerturbations = neuronPerturbations.toMap(),
-            activeBehavior = currentBehavior,
-            seed = seed
+            firingRates = behaviorRuntime.currentFiringRates,
+            regionStates = behaviorRuntime.currentRegionStates,
+            synapticOverlays = behaviorRuntime.currentSynapticOverlays,
+            neuronPerturbations = behaviorRuntime.neuronPerturbations.toMap(),
+            activeBehavior = behaviorRuntime.currentBehavior,
+            seed = seed,
+            regionPerturbations = behaviorRuntime.regionPerturbations.toMap()
         )
 
         if (_history.size >= maxHistoryCapacity) {
