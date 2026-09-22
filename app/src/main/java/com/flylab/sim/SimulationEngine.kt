@@ -140,8 +140,12 @@ class SimulationEngine(
         random = Random(snapshot.seed + snapshot.step * 31L)
     }
 
-    fun reset() {
-        random = Random(seed)
+    fun _setHistoryForReplay(newHistory: List<SimulationSnapshot>) {
+        _history.clear()
+        _history.addAll(newHistory)
+    }
+
+    fun reset() {        random = Random(seed)
         currentStep = 0L
         currentTimeSeconds = 0.0f
         currentFly = initialFly

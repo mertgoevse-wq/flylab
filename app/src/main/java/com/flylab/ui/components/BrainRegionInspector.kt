@@ -148,6 +148,30 @@ fun BrainRegionInspector(
                         steps = 20,
                         modifier = Modifier.fillMaxWidth()
                     )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    LearnPanel(
+                        title = "Was ist das ${neuropil.standardName}?",
+                        simpleExplanation = when(neuropil) {
+                            NeuropilId.ANTENNAL_LOBE -> "Die 'Nase' der Fliege für das Gehirn. Hier kommen alle Gerüche an und werden sortiert."
+                            NeuropilId.MUSHROOM_BODY -> "Das Lernzentrum. Wie ein Notizbuch, in dem die Fliege sich merkt, ob ein Geruch 'gut' oder 'schlecht' bedeutet."
+                            NeuropilId.CENTRAL_COMPLEX -> "Das Navigations- und Bewegungssystem. Hier entscheidet die Fliege, wohin sie steuert."
+                            NeuropilId.LATERAL_HORN -> "Das angeborene Reaktionszentrum. Bestimmte Gerüche (wie Pheromone) lösen hier sofort Reflexe aus, ohne dass die Fliege erst darüber nachdenken muss."
+                            NeuropilId.OPTIC_LOBE -> "Das Sehzentrum. Hier werden visuelle Reize und Bewegungen blitzschnell verarbeitet."
+                            NeuropilId.SUBESOPHAGEAL_ZONE -> "Das Geschmacks- und Beißzentrum. Steuert unter anderem den Rüssel."
+                            NeuropilId.LATERAL_ACCESSORY_LOBE -> "Die Übersetzungsstation. Nimmt Navigationsentscheidungen und bereitet sie für die Muskelbefehle vor."
+                        },
+                        scientificExplanation = when(neuropil) {
+                            NeuropilId.ANTENNAL_LOBE -> "Der Antennallobus empfängt cholinerge Projektionen der olfaktorischen Rezeptorneuronen (ORNs). Jedes der ~50 Glomeruli verarbeitet eine spezifische Geruchsstoff-Dimension durch lokale Interneuronen (LNs) bevor Projektionsneuronen (PNs) das Signal weiterleiten."
+                            NeuropilId.MUSHROOM_BODY -> "Kenyon-Zellen (KCs) erhalten olfaktorische Signale via PNs. Konvergente glutamaterge und cholinerge Projektionen treffen an den Synapsen der Mushroom Body Output Neurons (MBONs) auf dopaminerge Neuronen (DANs) – der Kernmechanismus prä-synaptischer synaptischer Plastizität."
+                            NeuropilId.CENTRAL_COMPLEX -> "Ein stark strukturiertes Neuropil (mit Protocerebral Bridge, Ellipsoid Body, Fan-Shaped Body, Noduli), das Kopfrichtungs-Daten (Head-Direction) verrechnet und topografisch kartografierte motorische Outputs orchestriert."
+                            NeuropilId.LATERAL_HORN -> "Erhält direkte Projektionsneuronen-Eingänge (PNs) aus dem Antennallobus, umgeleitet an das Mushroom Body. Typischerweise assoziiert mit angeborenen Valenzantworten aufgrund strukturierter anstatt zufälliger synaptischer Verbindungen."
+                            NeuropilId.OPTIC_LOBE -> "Das größte Gehirn-Neuropil, bestehend aus Lamina, Medulla, Lobula und Lobulaplatte. Verarbeitet retinale Signale (Photorezeptoren R1-R8) primär für Bewegungssehen und Farbdetektion."
+                            NeuropilId.SUBESOPHAGEAL_ZONE -> "Zentraler Verarbeitungshub für gustatorische Afferenzen (Schmecken) und Proboscis-Ausfahr-Reflexe (Motorsteuerung des Rüssels, Proboscis Extension Response)."
+                            NeuropilId.LATERAL_ACCESSORY_LOBE -> "Kritische prämotorische Relaisstation, in welche die Output-Neuronen der Kompassregion (Central Complex) projizieren, um asymmetrische deszendierende Neuronen anzuregen."
+                        }
+                    )
                 }
             }
         }

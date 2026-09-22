@@ -48,6 +48,9 @@ import com.flylab.ui.components.SensoryMotorDashboard
 import com.flylab.ui.components.Viewport3DCanvas
 import com.flylab.ui.components.ConnectomeExplorerScreen
 import kotlinx.coroutines.delay
+import com.flylab.sim.persistence.PersistenceManager
+import androidx.compose.ui.platform.LocalContext
+
 
 /**
  * Root interactive simulation environment for FlyLab.
@@ -79,6 +82,8 @@ fun FlyLabRootScreen() {
     }
 
     var currentTab by remember { mutableStateOf(0) }
+
+    val context = LocalContext.current
 
     // Coroutine simulation loop
     LaunchedEffect(isPlaying, playbackSpeed, engine) {
@@ -244,6 +249,19 @@ fun FlyLabRootScreen() {
                         isPlaying = false
                         engine.reset()
                         currentSnapshot = engine.history.last()
+                    },
+                    onSaveSession = {
+                        PersistenceManager.saveReplaySession(context, engine.history, currentConfig.id)
+                    },
+                    onLoadSession = {
+                        val session = PersistenceManager.loadReplaySession(context)
+                        if (session != null && session.history.isNotEmpty()) {
+                            isPlaying = false
+                            engine.reset()
+                            engine._setHistoryForReplay(session.history)
+                            engine.seekToStep(session.history.last().step)
+                            currentSnapshot = engine.history.last()
+                        }
                     }
                 )
             }

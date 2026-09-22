@@ -56,6 +56,8 @@ fun ExperimentControlPanel(
     onConfigSelected: (ExperimentConfiguration) -> Unit,
     onOpenJournal: () -> Unit,
     onReset: () -> Unit,
+    onSaveSession: () -> Unit = {},
+    onLoadSession: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var dropdownExpanded by remember { mutableStateOf(false) }
@@ -179,6 +181,18 @@ fun ExperimentControlPanel(
 
                     OutlinedButton(onClick = onReset, shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)) {
                         Text("Reset", fontSize = 11.sp)
+                    }
+
+                    Spacer(modifier = Modifier.width(4.dp))
+                    
+                    OutlinedButton(onClick = onSaveSession, shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)) {
+                        Text("Save", fontSize = 11.sp)
+                    }
+                    
+                    Spacer(modifier = Modifier.width(4.dp))
+                    
+                    OutlinedButton(onClick = onLoadSession, shape = androidx.compose.foundation.shape.RoundedCornerShape(4.dp)) {
+                        Text("Load", fontSize = 11.sp)
                     }
                 }
 
