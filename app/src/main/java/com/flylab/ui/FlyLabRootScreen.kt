@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -52,6 +54,10 @@ import com.flylab.ui.components.Viewport3DCanvas
 import com.flylab.ui.components.ConnectomeExplorerScreen
 import kotlinx.coroutines.delay
 import com.flylab.sim.persistence.PersistenceManager
+import com.flylab.sim.persistence.OnlinePersistenceManager
+import com.flylab.sim.persistence.SaveSession
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 
 
@@ -87,6 +93,7 @@ fun FlyLabRootScreen() {
     var currentTab by remember { mutableStateOf(0) }
 
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     // Coroutine simulation loop
     LaunchedEffect(isPlaying, playbackSpeed, engine) {
@@ -276,6 +283,11 @@ fun FlyLabRootScreen() {
                     },
                     onSaveSession = {
                         PersistenceManager.saveReplaySession(context, engine.history, currentConfig.id)
+                        // Optional online sync (non-blocking)
+                        val sessionData = SaveSession(experimentId = currentConfig.id, history = engine.history)
+                        scope.launch {
+                            OnlinePersistenceManager.syncSessionToCloud(sessionData)
+                        }
                     },
                     onLoadSession = {
                         val session = PersistenceManager.loadReplaySession(context)

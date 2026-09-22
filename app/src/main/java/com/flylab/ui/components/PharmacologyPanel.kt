@@ -10,6 +10,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.flylab.domain.model.NeuromodulatorType
 import com.flylab.sim.SimulationSnapshot
+import com.flylab.domain.model.ScientificEvidence
+import com.flylab.domain.model.ProvenanceLevel
 
 /**
  * 💊 Pharmacology Panel
@@ -27,11 +29,24 @@ fun PharmacologyPanel(
         shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
-            Text(
-                text = "Pharmakologie & Neuromodulatoren",
-                fontWeight = FontWeight.Bold,
-                fontSize = 14.sp
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Pharmakologie & Neuromodulatoren",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp
+                )
+                ProvenanceBadge(
+                    evidence = ScientificEvidence(
+                        level = ProvenanceLevel.MODELLED,
+                        citation = "Simulation Runtime Engine",
+                        notes = "Pharmacological injections here are mathematical models, not direct measurements."
+                    )
+                )
+            }
             Text(
                 text = "Mikroinjektion für experimentelle Verhaltensänderung",
                 fontSize = 12.sp,
