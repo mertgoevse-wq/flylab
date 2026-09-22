@@ -41,6 +41,7 @@ import com.flylab.render3d.RenderLayers
 import com.flylab.sim.SimulationEngine
 import com.flylab.ui.components.BrainRegionInspector
 import com.flylab.ui.components.CausalChainView
+import com.flylab.ui.components.TimelineGraphView
 import com.flylab.ui.components.ExperimentControlPanel
 import com.flylab.ui.components.JournalDialog
 import com.flylab.ui.components.ProvenanceBadge
@@ -214,6 +215,12 @@ fun FlyLabRootScreen() {
                 // 3.6 Plasticity UI
                 com.flylab.ui.components.PlasticityDashboard(
                     snapshot = currentSnapshot,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                )
+
+                // 3.7 Visual Timeline Graph
+                TimelineGraphView(
+                    history = engine.history,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                 )
 

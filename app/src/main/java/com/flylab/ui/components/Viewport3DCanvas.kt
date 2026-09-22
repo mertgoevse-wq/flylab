@@ -1,5 +1,7 @@
 package com.flylab.ui.components
 
+
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTransformGestures
@@ -36,6 +38,8 @@ import com.flylab.render3d.RenderLayers
 import com.flylab.render3d.Vector3D
 import com.flylab.sim.ConnectomeReference
 import com.flylab.sim.SimulationSnapshot
+
+private data class RenderPoly(val poly: com.flylab.render3d.Polygon3D, val verts: List<ProjectedPoint>, val meanDepth: Float)
 
 /**
  * High-performance 3D Viewport rendering the anatomical fly and neural dynamics.
@@ -94,16 +98,35 @@ fun Viewport3DCanvas(
             // 1. Render Exoskeleton & Cuticle
             if (renderLayers.showExoskeleton) {
                 // Polygons sorted from furthest to nearest
-                val sortedPolys = anatomyPolygons.mapNotNull { poly ->
-                    val projVerts = poly.vertices.map { camera.project(it, width, height) }
-                    if (projVerts.any { !it.isVisible }) null
-                    else {
-                        val meanDepth = projVerts.map { it.depthZ }.average().toFloat()
-                        Triple(poly, projVerts, meanDepth)
+                // Allocation-reduced Polygon projection and sorting
+                val renderContext = mutableListOf<RenderPoly>()
+                
+                for (i in anatomyPolygons.indices) {
+                    val poly = anatomyPolygons[i]
+                    var allVisible = true
+                    var depthSum = 0f
+                    val projVerts = ArrayList<ProjectedPoint>(poly.vertices.size)
+                    
+                    for (j in poly.vertices.indices) {
+                        val proj = camera.project(poly.vertices[j], width, height)
+                        if (!proj.isVisible) {
+                            allVisible = false
+                            break
+                        }
+                        projVerts.add(proj)
+                        depthSum += proj.depthZ
                     }
-                }.sortedByDescending { it.third }
+                    
+                    if (allVisible && projVerts.isNotEmpty()) {
+                        renderContext.add(RenderPoly(poly, projVerts, depthSum / projVerts.size))
+                    }
+                }
+                
+                renderContext.sortByDescending { it.meanDepth }
 
-                for ((poly, verts, _) in sortedPolys) {
+                for (item in renderContext) {
+                    val poly = item.poly
+                    val verts = item.verts
                     reusablePath.reset()
                     reusablePath.moveTo(verts[0].screenX, verts[0].screenY)
                     for (i in 1 until verts.size) {

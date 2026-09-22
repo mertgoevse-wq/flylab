@@ -36,6 +36,13 @@ We are very strict about scientific provenance. Every component is labeled with 
   <img src="assets/flylab_brain_view.png" alt="FlyLab Brain Visualizer" width="400"/>
 </div>
 
+## See it in Action
+
+<div align="center">
+  <video width="600" src="assets/product_video.mp4" controls></video>
+  <p><em>Real-time neural and motor dynamics overlaid on the 3D connectome model</em></p>
+</div>
+
 ## How we built it
 
 We separated concerns explicitly for testability and portability:
