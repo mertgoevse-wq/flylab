@@ -41,6 +41,7 @@ import com.flylab.render3d.RenderLayers
 import com.flylab.sim.SimulationEngine
 import com.flylab.ui.components.BrainRegionInspector
 import com.flylab.ui.components.CausalChainView
+import com.flylab.ui.components.PharmacologyPanel
 import com.flylab.ui.components.TimelineGraphView
 import com.flylab.ui.components.ExperimentControlPanel
 import com.flylab.ui.components.JournalDialog
@@ -221,6 +222,15 @@ fun FlyLabRootScreen() {
                 // 3.7 Visual Timeline Graph
                 TimelineGraphView(
                     history = engine.history,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                )
+
+                // 3.8 Pharmacology & Micro-Injections
+                PharmacologyPanel(
+                    snapshot = currentSnapshot,
+                    onInjectModulator = { type, amount ->
+                        engine.injectNeuromodulator(type, amount)
+                    },
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                 )
 

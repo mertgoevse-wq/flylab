@@ -165,6 +165,16 @@ class SimulationEngine(
         }
     }
 
+
+    fun injectNeuromodulator(type: NeuromodulatorType, amount: Float) {
+        val currentMod = currentFly.neuromodulators[type]
+        if (currentMod != null) {
+            val updatedMap = currentFly.neuromodulators.toMutableMap()
+            updatedMap[type] = currentMod.inject(amount)
+            currentFly = currentFly.copy(neuromodulators = updatedMap)
+        }
+    }
+
     fun setRegionPerturbation(region: NeuropilId, factor: Float) {
         if (factor == 1.0f) {
             behaviorRuntime.regionPerturbations.remove(region)
