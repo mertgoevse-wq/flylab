@@ -41,6 +41,7 @@ import com.flylab.render3d.RenderLayers
 import com.flylab.sim.SimulationEngine
 import com.flylab.ui.components.BrainRegionInspector
 import com.flylab.ui.components.CausalChainView
+import com.flylab.ui.components.GenomeExplorerScreen
 import com.flylab.ui.components.PharmacologyPanel
 import com.flylab.ui.components.TimelineGraphView
 import com.flylab.ui.components.ExperimentControlPanel
@@ -231,6 +232,12 @@ fun FlyLabRootScreen() {
                     onInjectModulator = { type, amount ->
                         engine.injectNeuromodulator(type, amount)
                     },
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                )
+
+                // 3.9 Genome & Genetics
+                GenomeExplorerScreen(
+                    snapshot = currentSnapshot,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                 )
 

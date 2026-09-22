@@ -9,8 +9,12 @@
   - Educational Context via `LearnPanel` (Milestone H)
   - Real-time Timeline Visualization (`TimelineGraphView` for Milestone F)
   - Save/Load Persistence + Supabase Sync Stub (OnlinePersistenceManager/Milestone G)
+  - Pharmacology & Modulators injections (PharmacologyPanel)
 - **Current Architecture:** Composed of Domain Models -> Simulation Runtime -> UI Graph Views & 3D Render Loop.
 
-## Next Big Step (Milestone: Genome / Pharmacology)
-- Currently missing: explicit neuromodulator UI controls or Pharmacological perturbations (Milestone J/K).
-- *Action*: Build a Pharmacology/Neuromodulator perturbation panel (e.g. injecting Dopamine / Octopamine directly) giving real scientific "What If" scenarios for behavior.
+## Achievements in this session
+- Cleaned up the README, added video and images references.
+- Implemented actual scientific injections (Dopamine, Octopamine, Serotonin) for real "What-if" scenario testing.
+- Created Supabase Stub for cloud logic.
+- Optimized Compose GC Canvas renders.
+- Wrote Learn By Doing interactive panels.
