@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -186,9 +187,16 @@ fun FlyLabRootScreen() {
             color = MaterialTheme.colorScheme.background
         ) {
             if (currentTab == 0) {
-            Column(modifier = Modifier.fillMaxSize()) {
-                // 1. 3D Fly Viewport (Flexible weight: 45% of screen height)
-                Box(modifier = Modifier.weight(0.42f).fillMaxWidth()) {
+            // The panels below have fixed intrinsic heights and together exceed the
+            // screen. A weighted child in a non-scrolling Column then gets ~0 px, so the
+            // 3D fly viewport vanished. Use a scrollable Column with a fixed viewport height.
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                // 1. 3D Fly Viewport (fixed height so it is never squeezed to zero)
+                Box(modifier = Modifier.height(360.dp).fillMaxWidth()) {
                     Viewport3DCanvas(
                         snapshot = currentSnapshot,
                         renderLayers = renderLayers,
