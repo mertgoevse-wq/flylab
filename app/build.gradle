@@ -69,6 +69,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.2'
     implementation 'androidx.navigation:navigation-compose:2.7.5'
     implementation 'com.google.code.gson:gson:2.10.1'
+    // LiteRT (successor of TensorFlow Lite) — real NPU/GPU compute dispatch on
+    // the Exynos 1580 (Samsung SLSI ENN NNAPI driver / Xclipse 540 GPU delegate).
+    implementation 'org.tensorflow:tensorflow-lite:2.16.1'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.16.1'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.json:json:20231013'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

@@ -13,6 +13,12 @@
   - Genome & Genetics Explorer (GenomeExplorerScreen)
 - **Current Architecture:** Composed of Domain Models -> Simulation Runtime -> UI Graph Views & 3D Render Loop.
 
+## NPU/GPU Acceleration (2026-10-19)
+- Samsung Galaxy A56 (Exynos 1580): real vendor evidence captured — Samsung SLSI ENN 2.3.28 runtime (libenn_public_api_cpp.so + GPU/unified driver backends), vendor AIDL HAL, /dev/{npu0,npu1,npu,unpu}_throughput nodes (2 NPU cores). Xclipse 540 GPU via Vulkan/OpenCL.
+- Integrated `AcceleratorBridge` (sim/backend) with LiteRT dispatch: **NNAPI(NPU) → GPU delegate → CPU**, each hardware path validated by a numeric self-test against `assets/neural_kernel_manifest.json`; failed paths are rejected, never tolerated (CPU fallback guaranteed).
+- Deterministic neural kernel `assets/neural_kernel.tflite` (32 KC → 8 MBON, FULLY_CONNECTED+TANH) hand-encoded via `tools/generate_npu_kernel.py` (official TFLite schema bindings, parse-back validated).
+- Backend name surfaces in `PerformanceDiagnostics` snapshots via `PerformanceDiagnosticsBridge`; strategy unit-tested (`AcceleratorBridgeStrategyTest`). Numerical sim offload is opt-in (`-Dflylab.npu.offload=true`) and OFF by default — kernel is a hardware proxy, not bit-identical to the sigmoid dynamics. Full evidence in `docs/NPU_GPU_RESEARCH.md` (MODELED).
+
 ## Achievements in this session
 - Real Integration accomplished. The APK is stable, and the components do interact perfectly passing through the real simulation parameters and states.
 - Cleaned up the README, eliminated AI-slop, added video and images references.

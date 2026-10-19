@@ -49,12 +49,13 @@ class PerformanceDiagnostics {
     }
 
     fun getSnapshot(activeOrganisms: Int): DiagnosticsSnapshot {
+        val external = PerformanceDiagnosticsBridge.publishedBackendName
         return DiagnosticsSnapshot(
             tickDurationMs = lastTickDuration,
             renderTimeMs = renderTime,
             inferenceLatencyMs = lastInferenceLatency,
             activeOrganisms = activeOrganisms,
-            computeBackend = currentBackendName,
+            computeBackend = if (external == "CPU Ref") currentBackendName else "$currentBackendName + $external",
             droppedFrames = dropped
         )
     }
