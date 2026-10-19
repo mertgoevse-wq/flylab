@@ -1,38 +1,36 @@
 package com.flylab.ui
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flylab.data.BrainDataRepository
 import com.flylab.domain.brain.Brain
-import com.flylab.domain.connectome.Connectome
 import com.flylab.domain.neural.RegionalActivity
-import com.flylab.domain.simulation.SimulationConfig
-import com.flylab.domain.simulation.SimulationState
-import com.flylab.simulation.SimulationEngine
+import com.flylab.sim.SimulationEngine
+import com.flylab.sim.SimulationSnapshot
+import com.flylab.sim.toRegionalActivity
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
  * ViewModel for the brain explorer.
- * Manages simulation state and updates.
+ *
+ * Driven by the CANONICAL [SimulationEngine] (`com.flylab.sim`) — the same engine and
+ * snapshot type that powers the world view. There is exactly one simulation state;
+ * this ViewModel only projects it to regional activity for the brain viewer.
+ * Seed is fixed for determinism (was: System.currentTimeMillis()).
  */
-class BrainExplorerViewModel : ViewModel() {
+class BrainExplorerViewModel(
+    seed: Long = 42L
+) : ViewModel() {
 
     private val repository = BrainDataRepository()
-    private val simulationEngine = SimulationEngine(
-        config = SimulationConfig(
-            seed = System.currentTimeMillis(),
-            timeStep = 100f,
-            levelOfDetail = 1,
-            enablePlasticity = true,
-            enableMemory = true
-        )
-    )
+    private val simulationEngine = SimulationEngine(seed = seed)
 
-    private var _state = mutableStateOf<SimulationState?>(null)
-    val state: State<SimulationState?> = _state
+    private var _snapshot = mutableStateOf<SimulationSnapshot?>(null)
+    val snapshot: State<SimulationSnapshot?> = _snapshot
 
     private var _brain = mutableStateOf<Brain?>(null)
     val brain: State<Brain?> = _brain
@@ -51,13 +49,10 @@ class BrainExplorerViewModel : ViewModel() {
 
     private fun loadBrainData() {
         viewModelScope.launch {
-            val brain = repository.loadReferenceBrain()
-            val connectome = repository.loadReferenceConnectome()
-
-            _brain.value = brain
-
-            val initialState = simulationEngine.createInitialState(brain, connectome)
-            _state.value = initialState
+            _brain.value = repository.loadReferenceBrain()
+            val snapshot = simulationEngine.history.last()
+            _snapshot.value = snapshot
+            _activity.value = snapshot.toRegionalActivity()
         }
     }
 
@@ -67,14 +62,19 @@ class BrainExplorerViewModel : ViewModel() {
         _isRunning.value = true
         simulationJob = viewModelScope.launch {
             while (_isRunning.value) {
-                _state.value?.let { currentState ->
-                    val newState = simulationEngine.step(currentState)
-                    _state.value = newState
-                    _activity.value = newState.neuralActivity as? RegionalActivity
-                }
-                delay(100) // Update every 100ms
+                val snapshot = simulationEngine.step(0.05f)
+                _snapshot.value = snapshot
+                _activity.value = snapshot.toRegionalActivity()
+                delay(50)
             }
         }
+    }
+
+    /** Single deterministic step; used by tests and frame-stepping UI. */
+    fun stepOnce(dtSeconds: Float = 0.05f) {
+        val snapshot = simulationEngine.step(dtSeconds)
+        _snapshot.value = snapshot
+        _activity.value = snapshot.toRegionalActivity()
     }
 
     fun stopSimulation() {
@@ -96,3 +96,4 @@ class BrainExplorerViewModel : ViewModel() {
         stopSimulation()
     }
 }
+

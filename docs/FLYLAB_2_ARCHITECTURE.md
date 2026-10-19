@@ -25,11 +25,12 @@ ExperimentRunner / Pharmakologie / Ökonomie nur als Treiber der EINEN Engine.
 | Engine | Treiber | Status |
 |---|---|---|
 | `sim.SimulationEngine` (BehaviorRuntime, Seed, Snapshot) | `FlyLabRootScreen`, `ExperimentRunner` | KANONISCH |
-| `simulation.SimulationEngine` (SimulationConfig, PlasticityEngine) | `BrainExplorerViewModel` | ZUSAMMENFÜHREN |
+| `simulation.SimulationEngine` (SimulationConfig, PlasticityEngine) | nichts mehr (entdrahtet 19.10.) | STILLLEGEN |
 
-`BrainExplorerViewModel` muss auf `sim.SimulationEngine` umgestellt werden; ungenutzte Duplikate
-(`domain/simulation/*`, falls dann orphan) entfernen. Erst danach sind Welt- und Gehirnansicht
- garantiert derselbe Zustand.
+Erledigt 19.10.: `BrainExplorerViewModel` läuft auf `sim.SimulationEngine` (Seed 42, deterministisch);
+`SimulationSnapshot.toRegionalActivity()` projiziert Welt→Gehirn, Test `BrainProjectionTest` (2 Tests)
+sperrt identische Seeds → identische Aktivität. `simulation.*` ist unreferenziert; Löschung erst nach
+Prüfung von `domain/simulation/*`-Abhängigkeiten (Phase B Rest).
 
 ## Schichten (ist)
 

@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountTree
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Search
 
 import androidx.compose.material3.Text
@@ -53,6 +54,8 @@ import com.flylab.ui.components.ProvenanceBadge
 import com.flylab.ui.components.SensoryMotorDashboard
 import com.flylab.ui.components.Viewport3DCanvas
 import com.flylab.ui.components.ConnectomeExplorerScreen
+import com.flylab.data.BrainDataRepository
+import com.flylab.sim.toRegionalActivity
 import kotlinx.coroutines.delay
 import com.flylab.sim.persistence.PersistenceManager
 import com.flylab.sim.persistence.OnlinePersistenceManager
@@ -176,6 +179,15 @@ fun FlyLabRootScreen() {
                         contentDescription = "Genome"
                     ) },
                     label = { Text("Genome") }
+                )
+                NavigationBarItem(
+                    selected = currentTab == 3,
+                    onClick = { currentTab = 3 },
+                    icon = { Icon(
+                        imageVector = Icons.Default.Psychology,
+                        contentDescription = "Gehirn"
+                    ) },
+                    label = { Text("Gehirn") }
                 )
             }
         }
@@ -316,8 +328,15 @@ fun FlyLabRootScreen() {
                         engine.setNeuronPerturbation(neuronId, factor)
                     }
                 )
-            } else {
+            } else if (currentTab == 2) {
                 GenomeExplorerScreen()
+            } else {
+                // Gehirn-Hauptansicht: reine Projektion desselben Snapshots — kein zweiter Zustand.
+                val referenceBrain = remember { BrainDataRepository().loadReferenceBrain() }
+                BrainExplorerScreen(
+                    brain = referenceBrain,
+                    activity = currentSnapshot.toRegionalActivity()
+                )
             }
         }
 

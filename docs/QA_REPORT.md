@@ -24,6 +24,13 @@ CameraAndGeometry, M14Reproducibility, AcceleratorBridgeStrategy, ExperimentRunn
 4. **Phasen B–G**: Navigation-Umbau, Fliegen-Anatomie, Gehirn-Fenster, Aufgaben/Pharma/Ökonomie
    sind geplant (`FLYLAB_2_ARCHITECTURE.md`), aber noch nicht implementiert.
 
+## Nachtrag Phase B/D (19.10., 22:07): 78/78 BESTANDEN
+
+`BUILD SUCCESSFUL`, Re-Ausführung erzwungen. Neu: `BrainProjectionTest` (3 Tests —
+Welt/Gehirn-Projektion, Normalisierung, EEG-Populationssignal). Code: `BrainExplorerViewModel`
+auf kanonischer Engine, 4. Nav-Tab „Gehirn" als reine Snapshot-Projektion, `populationSignal()`
+(MODELED, kein echtes EEG). Unverändert offen: Geräte-Smoke-Test, Video-Audit, Release-Build.
+
 ## Nächste QA-Schritte
 
 Neues `app-debug.apk` bauen → per `adb install` auf A56 → Screenshots der Welt-/Gehirn-Ansicht →
