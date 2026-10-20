@@ -127,6 +127,11 @@ object FlyMeshGeometry {
         buildWing(isRight = false, polygons, lines)
         buildWing(isRight = true, polygons, lines)
 
+        // --- 3b. HALTERES (Diptera hallmark: gyroscopic hind-wing homologues) ---
+        // Posteroventral to the wing hinge, stalk + knob per side.
+        buildHaltere(isRight = false, polygons, lines)
+        buildHaltere(isRight = true, polygons, lines)
+
         // --- 4. SIX ARTICULATED LEGS ---
         // Prothoracic (Front T1)
         buildLeg(startX = -0.4f, startZ = 1.0f, dirX = -1f, dirZ = 0.6f, lines)
@@ -205,6 +210,36 @@ object FlyMeshGeometry {
         lines.add(Line3D(wingRoot, wingTrailingMid, COLOR_WING_VEIN, strokeWidthDp = 1.2f))
         lines.add(Line3D(wingTrailingMid, wingTip, COLOR_WING_VEIN, strokeWidthDp = 1.0f))
         lines.add(Line3D(wingRoot, Vector3D(sign * 1.3f, 0.50f, -1.1f), COLOR_WING_VEIN, strokeWidthDp = 1.0f))
+    }
+
+    private fun buildHaltere(isRight: Boolean, polygons: MutableList<Polygon3D>, lines: MutableList<Line3D>) {
+        val sign = if (isRight) 1.0f else -1.0f
+        val base = Vector3D(sign * 0.50f, 0.28f, -0.10f)
+        val joint = Vector3D(sign * 0.62f, 0.24f, -0.28f)
+        val knob = Vector3D(sign * 0.68f, 0.22f, -0.40f)
+
+        lines.add(Line3D(base, joint, COLOR_LEG, strokeWidthDp = 2.0f, tag = "haltere"))
+        lines.add(Line3D(joint, knob, COLOR_LEG, strokeWidthDp = 2.5f, tag = "haltere"))
+        // Knob cross (visible club end, mirrored per side)
+        lines.add(
+            Line3D(
+                knob + Vector3D(0f, 0.06f, 0f),
+                knob + Vector3D(0f, -0.06f, 0f),
+                COLOR_BODY_DARK, strokeWidthDp = 2.5f, tag = "haltere"
+            )
+        )
+        polygons.add(
+            Polygon3D(
+                vertices = listOf(
+                    knob + Vector3D(0f, 0.06f, 0f),
+                    knob + Vector3D(sign * 0.05f, 0f, -0.03f),
+                    knob + Vector3D(0f, -0.06f, 0f),
+                    knob + Vector3D(-sign * 0.05f, 0f, -0.03f)
+                ),
+                baseColorHex = COLOR_BODY_DARK,
+                alpha = 1.0f
+            )
+        )
     }
 
     private fun buildLeg(startX: Float, startZ: Float, dirX: Float, dirZ: Float, lines: MutableList<Line3D>) {

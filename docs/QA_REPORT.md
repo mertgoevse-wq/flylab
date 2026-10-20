@@ -31,6 +31,16 @@ Welt/Gehirn-Projektion, Normalisierung, EEG-Populationssignal). Code: `BrainExpl
 auf kanonischer Engine, 4. Nav-Tab „Gehirn" als reine Snapshot-Projektion, `populationSignal()`
 (MODELED, kein echtes EEG). Unverändert offen: Geräte-Smoke-Test, Video-Audit, Release-Build.
 
+## Nachtrag Single-Engine + Kamera-Guards (20.10.)
+
+- Vollsuite **81/81 grün** (frisch verifiziert 20.10., erzwungene Re-Ausführung) nach: Haltere-Test-Fix (Spiegelvergleich sortierte falsch — Geometrie war
+  korrekt, Testlogik korrigiert), Löschung des toten Doppel-Engine-Clusters
+  (`simulation/SimulationEngine.kt`, `domain/simulation/SimulationState.kt`,
+  `ui/BrainExplorerViewModel.kt` — alle null-verweis-geprüft), neuer Kamera-Extremgesten-Test.
+- Kamera-Guards (Zoom 1.5–25, Elevation ±85°, Sichtbarkeit bei Max-Zoom) jetzt per Test gesperrt.
+- Haltere-Anatomie (Diptera-Merkmal, bilateral gespiegelt) per `HaltereGeometryTest` gesperrt.
+- Unverändert offen: Geräte-Smoke-Test, Video-Audit, Release-Build.
+
 ## Nächste QA-Schritte
 
 Neues `app-debug.apk` bauen → per `adb install` auf A56 → Screenshots der Welt-/Gehirn-Ansicht →

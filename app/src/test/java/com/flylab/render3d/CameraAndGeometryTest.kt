@@ -56,6 +56,25 @@ class CameraAndGeometryTest {
     }
 
     @Test
+    fun `camera elevation clamps and fly stays projectable after extreme gestures`() {
+        var camera = Camera3D()
+        camera = camera.orbit(0f, 500f)
+        assertEquals(85f, camera.elevationDegrees, 0.001f)
+        camera = camera.orbit(0f, -1000f)
+        assertEquals(-85f, camera.elevationDegrees, 0.001f)
+
+        // Repeated extreme zoom-outs must never lose the fly: distance clamps at 25.
+        repeat(20) { camera = camera.zoom(10f) }
+        assertEquals(25f, camera.distance, 0.001f)
+        val projected = camera.project(Vector3D(0f, 0f, 0f), 1080f, 2400f)
+        assertTrue("Fly target must stay visible at max zoom", projected.isVisible)
+
+        // Repeated extreme zoom-ins clamp at 1.5 (no inside-out view).
+        repeat(20) { camera = camera.zoom(0.1f) }
+        assertEquals(1.5f, camera.distance, 0.001f)
+    }
+
+    @Test
     fun `anatomy geometry generates complete morphological model`() {
         val (polygons, lines) = FlyMeshGeometry.buildAnatomyGeometry()
         assertTrue("Polygons for body, wings, and eyes must be generated", polygons.isNotEmpty())
