@@ -41,7 +41,15 @@ Branch: `feat/simulator-world-brain-view` · Tests: **81/81 grün** (frisch veri
 
 ## Wichtigste Einschränkungen (unverändert ehrlich)
 
-- `FlyLab-debug.apk` und `Screen_Recording_20261019_224710_FlyLab.mp4` existieren nirgends auf
-  diesem System → kein APK-Diff gegen Auslieferung, kein Video-Audit (s. `VIDEO_FRAME_AUDIT.md`).
+- `Screen_Recording_20261019_224710_FlyLab.mp4` existiert nirgends auf diesem System →
+  kein Video-Audit (s. `VIDEO_FRAME_AUDIT.md`).
+- APK-Diff gegen Auslieferung weiterhin offen: der frische Build ist identisch zum CI-Artefakt,
+  aber der historische Auslieferungsstand wurde nie archiviert.
 - Kein Galaxy A56 per `adb` verbunden → kein Geräte-Smoke-Test, keine Screenshots.
 - Nur Debug-APK (Live Literals, 4 ABIs); kein Release/Minify-Lauf.
+
+## Artefakt (Nachtrag 20.10.)
+
+- `releases/FlyLab-debug.apk` — 30.321.300 Bytes, MD5 `5424c02749fae1e090853f3944d0d962`,
+  Build 20.10.2026 12:07. Identisch mit `app-debug.apk` aus demselben Lauf.
+  Damit liegen Build und Artefakt im selben Commit.
